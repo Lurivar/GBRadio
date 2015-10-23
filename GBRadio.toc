@@ -1,0 +1,13 @@
+## Interface: 60200
+## Title: GBRadio
+## Notes: Secure in-character communications for roleplaying guilds.
+## SavedVariables: GBRadioDB
+## DefaultState: enabled
+## Author: Nasias Darkstar
+## Version: 0.7
+embeds.xml
+localisation/default.lua
+GBRadio_Pre.lua
+GBRadio_Presets.lua
+GBRadio_Options.lua
+GBRadio.lua
