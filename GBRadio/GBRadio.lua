@@ -48,7 +48,7 @@ function GBRadio:IdentifyChatFrames()
     for i = 1, NUM_CHAT_WINDOWS do
         local Frame = _G["ChatFrame"..i]
         if Frame then
-            Frame:AddMessage(string.format(GBRadio_Localisation.IDENTIFY_CHAT_FRAME, self.db.char["Name"], tostring(i)));
+            Frame:AddMessage(string.format(GBRadio_Localisation.IDENTIFY_CHAT_FRAME, self.db.char["Name"], tostring(i)), self.db.char["MessageColour"][1], self.db.char["MessageColour"][2], self.db.char["MessageColour"][3]);
         end
     end
 end;
