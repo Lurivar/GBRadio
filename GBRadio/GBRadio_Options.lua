@@ -114,6 +114,19 @@ GBRadio.OptionsTable = {
                     order       = 1
                 
                 },
+                
+                chatmessagecolour = {
+                
+                    name        = "Colour of message text",
+                    desc        = "Set text colour",
+                    type        = "color",
+                    set         = function(info, ...) tmp = {...}; GBRadio.db.char["MessageColour"] = tmp; end,
+                    get         = function(info) return GBRadio.db.char["MessageColour"][1], GBRadio.db.char["MessageColour"][2], GBRadio.db.char["MessageColour"][3], GBRadio.db.char["MessageColour"][4];  end,
+                    hasAlpha    = false,
+                    width       = "full",
+                    cmdHidden   = true,
+                    order       = 2
+                },
             
                 speech = {
                 
@@ -124,7 +137,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["Speech"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 2
+                    order       = 3
                     
                 },
                 
@@ -137,7 +150,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["Emotes"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 3
+                    order       = 4
                     
                 },
                 
@@ -151,7 +164,7 @@ GBRadio.OptionsTable = {
                     confirm     = function() return "|cFFFF0000WARNING!|r\n\nThis addon does not filter profanity from messages!\n\nBy disabling redacted emotes, messages sent by other players will be automatically relayed into an emote by this addon when you receive a message.\n\nRedacted emotes is automatically enabled because Blizzard always holds you responsible for all messages that are sent by your client, regardless of who or what writes them!\n\nWhilst disabling redacted emotes improves the realism of using a communication device, you should only disable it if you trust that EVERYONE in your guild will not swear, send racist remarks or generally break World of Warcraft's rules when sending messages.\n\nIf you are unsure, it's recommended that you leave redacted emotes enabled!" end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 4
+                    order       = 5
                     
                 },
                 
@@ -164,7 +177,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["MetaGamingState"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 5
+                    order       = 6
                     
                 },
                 
@@ -177,21 +190,8 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["ShowTRP3Names"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 6
-                
-                },
-                
-                chatmessagecolour = {
-                
-                    name        = "Colour of message text",
-                    desc        = "Set text colour",
-                    type        = "color",
-                    set         = function(info, ...) tmp = {...}; GBRadio.db.char["MessageColour"] = tmp; end,
-                    get         = function(info) return GBRadio.db.char["MessageColour"][1], GBRadio.db.char["MessageColour"][2], GBRadio.db.char["MessageColour"][3], GBRadio.db.char["MessageColour"][4];  end,
-                    hasAlpha    = false,
-                    width       = "full",
-                    cmdHidden   = true,
                     order       = 7
+                
                 },
                 
                 deviceemotenoises = {
@@ -313,7 +313,7 @@ GBRadio.OptionsTable = {
                 
                 transmittermaxrange = {
                 
-                    name        = "Maximum transmitter range theshold(WoW coordinates)",
+                    name        = "Maximum transmitter range threshold",
                     desc        = "Maximum range you can be away from a transmitter before message sending and receiving is cut off completely.",
                     type        = "range",
                     set         = function(info, val) GBRadio.db.char["TransmitterMaxRange"] = val; end,
@@ -344,7 +344,7 @@ GBRadio.OptionsTable = {
                 
                 transmitterlowrange = {
                 
-                    name        = "Transmitter low distortion theshold",
+                    name        = "Transmitter low distortion threshold",
                     desc        = "Distance from transmitters before messages start to get distorted.",
                     type        = "range",
                     set         = function(info, val) GBRadio.db.char["TransmitterLowRange"] = val; end,
@@ -362,7 +362,7 @@ GBRadio.OptionsTable = {
                 
                 transmittermedrange = {
                 
-                    name        = "Transmitter bad distortion theshold",
+                    name        = "Transmitter bad distortion threshold",
                     desc        = "Distance from transmitters before messages start to very distorted.",
                     type        = "range",
                     set         = function(info, val) GBRadio.db.char["TransmitterMedRange"] = val; end,
@@ -380,7 +380,7 @@ GBRadio.OptionsTable = {
                 
                 transmitterhighrange = {
                 
-                    name        = "Transmitter very bad distortion theshold",
+                    name        = "Transmitter very bad distortion threshold",
                     desc        = "Distance from transmitters before messages become very badly distorted.",
                     type        = "range",
                     set         = function(info, val) GBRadio.db.char["TransmitterHighRange"] = val; end,
