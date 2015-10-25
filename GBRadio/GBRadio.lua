@@ -474,13 +474,13 @@ function GBRadio:PlayRadioCrackle()
 
 end;
 
-function GBRadio:SendDummyMessage()
+--[[function GBRadio:SendDummyMessage()
     
     ChannelPrefix = "GBRADIO";
     local MessageData = self:Serialize({ SenderRPName = "Communication System", Message = "This is a test of the communications system.", Static = 0 });
     self:SendCommMessage(ChannelPrefix, MessageData, self.MessageTarget, self.MessagePlayer, self.MessagePriority);
     
-end;
+end;]]
 
 function GBRadio:SendMessage(GBRadioMessage)
 
@@ -793,7 +793,7 @@ function GBRadio:OnInitialize()
     self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("GBRadio", "GBRadio");
     self:RegisterChatCommand("gbr", "ChatCommandHandler");
     self:RegisterChatCommand("bb", "SendMessage");
-    self:RegisterChatCommand("gbrdebug", "SendDummyMessage");
+    --self:RegisterChatCommand("gbrdebug", "SendDummyMessage");
 
     self:RegisterAddonChannel();
 
