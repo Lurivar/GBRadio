@@ -862,6 +862,15 @@ function GBRadio:OnInitialize()
     self:RegisterChatCommand("gbrdebug", "SendDummyMessage");
 
     self:RegisterAddonChannel();
+    
+    local frameMA = CreateFrame("FRAME");
+    frameMA:RegisterEvent("PLAYER_ENTERING_WORLD");
+    
+    function frameMA:OnEvent(event)
+        JoinChannelByName(GBRadio.GHI_AddonChannelPub, nil);
+    end
+    
+    frameMA:SetScript("OnEvent", frameMA.OnEvent);
 
 end;
 
