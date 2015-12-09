@@ -1,7 +1,7 @@
 GBRadio_Colour          = {};
 GBRadio_Localisation    = {};
 
-GBRadio_Version = "GBRadio - v" .. "1.0";
+GBRadio_Version = "GBRadio - v" .. "2.0";
 
 -- LOCALISATION.LUA
 GBRadio_Colour.Error       = ""--"|cFFFF0000";
