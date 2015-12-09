@@ -2,6 +2,10 @@
 local waitTable = {};
 local waitFrame = nil;
 
+-- Variables used to stop message received spammage
+GBRadio.CurrentTime = 0;
+GBRadio.LastTime    = 0;
+
 function GBRadio:DelayFunction(delay, func, ...)
   if(type(delay)~="number" or type(func)~="function") then
     return false;
@@ -474,42 +478,57 @@ function GBRadio:PlayRadioCrackle()
 
 end;
 
---[[function GBRadio:SendDummyMessage()
+function GBRadio:SendDummyMessage()
     
     ChannelPrefix = "GBRADIO";
     local MessageData = self:Serialize({ SenderRPName = "Communication System", Message = "This is a test of the communications system.", Static = 0 });
     self:SendCommMessage(ChannelPrefix, MessageData, self.MessageTarget, self.MessagePlayer, self.MessagePriority);
     
-end;]]
+end;
 
-function GBRadio:SendMessage(GBRadioMessage)
+function GBRadio:SendMessage(GBRadioMessage, MessageType)
 
     local MessageData   = {};
+    local MessageType = MessageType or false;
     local ChatFrame     = _G["ChatFrame" .. self.db.char["OutputChatFrame"]];
     local TRP3_Name     = nil;
     local Static        = 0;
     local ChannelPrefix = self:GetCommFrequencies(true);
+    
+    -- Used to switch between isolated or public
+    local MessageTarget = self.MessageTarget; -- Mode we want to send with : "GUILD"/"CHANNEL"/notused
+    local MessagePlayer = self.MessagePlayer; -- Target we want to send to : nil/channelname/playername
+    
+    if GBRadio.db.char["IsolatedMode"] == false then
+        MessageTarget = "CHANNEL";
+        MessagePlayer = tostring(GetChannelName(self.GHI_AddonChannelPub));
+    end
+    
 
     if GBRadio.db.char["Active"] == true then
     
         if string.len(GBRadioMessage) > 0 then
         
-            if self.db.char["Emotes"] == true then
+            if MessageType ~= "PANIC" then   
             
-                if self.db.char["Speech"] == true then
-                
-                    SendChatMessage(string.format(GBRadio.db.char.EmoteSend, self:GetTextGender(), string.lower(GBRadio.db.char["Name"]), GBRadio_Localisation.SPLIT_DELIMITER), "EMOTE", nil, nil);
-                else
-                
-                    SendChatMessage(string.format(GBRadio.db.char.EmoteSendHidden, self:GetTextGender(), string.lower(GBRadio.db.char["Name"])), "EMOTE", nil, nil);
-                    
+                if self.db.char["Emotes"] == true then
+
+                    if self.db.char["Speech"] == true then
+
+                        SendChatMessage(string.format(GBRadio.db.char.EmoteSend, self:GetTextGender(), string.lower(GBRadio.db.char["Name"]), GBRadio_Localisation.SPLIT_DELIMITER), "EMOTE", nil, nil);
+                    else
+
+                        SendChatMessage(string.format(GBRadio.db.char.EmoteSendHidden, self:GetTextGender(), string.lower(GBRadio.db.char["Name"])), "EMOTE", nil, nil);
+
+                    end
+
                 end
-                
-            end
-            
-            if self.db.char["Speech"] == true then
-            
-                SendChatMessage(GBRadioMessage, "SAY", DEFAULT_CHAT_FRAME.editBox.LanguageID, nil);
+
+                if self.db.char["Speech"] == true then
+
+                    SendChatMessage(GBRadioMessage, "SAY", DEFAULT_CHAT_FRAME.editBox.LanguageID, nil);
+
+                end
                 
             end
             
@@ -557,8 +576,8 @@ function GBRadio:SendMessage(GBRadioMessage)
                     end
                     
                     MessageData = self:Serialize({ ["SenderRPName"] = TRP3_Name, ["Message"] = GBRadioMessage, ["Static"] = Static });
-                    self:DelayFunction(self.db.char["MsgSendDelay"], GBRadio.SendCommMessage, self, ChannelPrefix[self.db.char["PrimaryChannelPrefix"]], MessageData, self.MessageTarget, self.MessagePlayer, self.MessagePriority);
-                
+                    self:DelayFunction(self.db.char["MsgSendDelay"], GBRadio.SendCommMessage, self, ChannelPrefix[self.db.char["PrimaryChannelPrefix"]], MessageData, MessageTarget, MessagePlayer, self.MessagePriority);
+                    
                 else
                 
                     local ChatFrame = _G["ChatFrame" .. GBRadio.db.char["OutputChatFrame"]];
@@ -570,7 +589,7 @@ function GBRadio:SendMessage(GBRadioMessage)
             else
             
                 MessageData = self:Serialize({ ["SenderRPName"] = TRP3_Name, ["Message"] = GBRadioMessage, ["Static"] = Static });
-                self:DelayFunction(self.db.char["MsgSendDelay"], GBRadio.SendCommMessage, self, ChannelPrefix[self.db.char["PrimaryChannelPrefix"]], MessageData, self.MessageTarget, self.MessagePlayer, self.MessagePriority);
+                self:DelayFunction(self.db.char["MsgSendDelay"], GBRadio.SendCommMessage, self, ChannelPrefix[self.db.char["PrimaryChannelPrefix"]], MessageData, MessageTarget, MessagePlayer, self.MessagePriority);
             
             end
             
@@ -584,12 +603,48 @@ function GBRadio:SendMessage(GBRadioMessage)
     
 end;
 
-function GBRadio.ReceiveMessage(Frequency, CommsData, _, SenderName)
+function GBRadio:SendPanicMessage()
+    
+    local CharacterName;
+    local SubZone;
+    local Location;
+    local Zone;
+    
+    Location = self:GetPlayerLocation();
+    SubZone = GetSubZoneText();
+    
+    if string.len(SubZone) ~= 0 then
+        Zone = SubZone .. ", " .. Location["Area"];
+    else
+        Zone = Location["Area"];
+    end
+    
+    if self:TRP3_Installed() == true then
+        CharacterName = self:TRP3_GetRPName();
+    else
+        CharacterName = GetUnitName("player");
+    end
+    
+    
+    local PanicMessage = string.format(GBRadio.db.char["PanicButtonMessage"], CharacterName, Zone, self:Round(Location["x"], 2) .. ", " .. self:Round(Location["y"], 2))
+    
+    if self.db.char["PanicEmotes"] == true then
+        SendChatMessage(string.format(GBRadio.db.char.PanicButtonEmote, self:GetTextGender(), string.lower(GBRadio.db.char["Name"])), "EMOTE", nil, nil);
+    end
+      
+    self:SendMessage(PanicMessage, "PANIC");
+    
+end;
 
+function GBRadio.ReceiveMessage(Frequency, CommsData, Method, SenderName)
+
+    if Method == "CHANNEL" and GBRadio.db.char["IsolatedMode"] == true then
+        return;
+    end
+    
     local MessageSuccess, DecryptedCommsData    = GBRadio:Deserialize(CommsData);
     local ChatFrame                             = _G["ChatFrame" .. GBRadio.db.char["OutputChatFrame"]];
     local Static = 0;
-    
     if DecryptedCommsData["SenderRPName"] ~= nil and DecryptedCommsData["SenderRPName"] == "\067\111\109\109\117\110\105\099\097\116\105\111\110\032\083\121\115\116\101\109" then
         
         SenderName = DecryptedCommsData["SenderRPName"];
@@ -651,42 +706,51 @@ function GBRadio.ReceiveMessage(Frequency, CommsData, _, SenderName)
             
             -- If the message isn't from us, then the radio should behave like it's receiving a message
             if SenderName ~= GBRadio.PlayerName then
-            
-                if GBRadio.db.char["Emotes"] == true then
                 
-                    local MurmurNoiseTable = GBRadio:GetDeviceEmoteNoises(true); -- Get as table, rather than string with false
-                    local MurmurNoise = MurmurNoiseTable[math.random(1, #MurmurNoiseTable)];
+                GBRadio.CurrentTime = time();
+                
+                -- If the last emote was sent more than or equal to 10 seconds ago, then we can fire off another message received emote
+                -- This just helps prevent generating constant emotes if you have a busy walker channel
+                if GBRadio.LastTime ~= 0 and GBRadio.CurrentTime - GBRadio.LastTime >= 10 then
                     
-                    if GBRadio.db.char["RedactedEmotes"] == false then
-                    
-                        local FormattedRadioMessage = string.format(GBRadio.db.char.EmoteReceive, GBRadio.db.char["Name"], MurmurNoise);
-                        local MessageLength         = string.len(DecryptedCommsData["Message"]);
-                        local RadioFluffLength      = string.len(FormattedRadioMessage);
-                        local ChopThreshold         = 0;     -- We might need to make extra room if they use MRP or whatever. (seems this is redundant, but leave it here in case)
-                        
-                        if MessageLength < ( 255 - ( RadioFluffLength + ChopThreshold ) ) then
-                        
-                            SendChatMessage(FormattedRadioMessage .. DecryptedCommsData.Message, "EMOTE", nil, nil);
-                            
+                    GBRadio.LastTime = GBRadio.CurrentTime;
+            
+                    if GBRadio.db.char["Emotes"] == true then
+
+                        local MurmurNoiseTable = GBRadio:GetDeviceEmoteNoises(true); -- Get as table, rather than string with false
+                        local MurmurNoise = MurmurNoiseTable[math.random(1, #MurmurNoiseTable)];
+
+                        if GBRadio.db.char["RedactedEmotes"] == false then
+
+                            local FormattedRadioMessage = string.format(GBRadio.db.char.EmoteReceive, GBRadio.db.char["Name"], MurmurNoise);
+                            local MessageLength         = string.len(DecryptedCommsData["Message"]);
+                            local RadioFluffLength      = string.len(FormattedRadioMessage);
+                            local ChopThreshold         = 0;     -- We might need to make extra room if they use MRP or whatever. (seems this is redundant, but leave it here in case)
+
+                            if MessageLength < ( 255 - ( RadioFluffLength + ChopThreshold ) ) then
+
+                                SendChatMessage(FormattedRadioMessage .. DecryptedCommsData.Message, "EMOTE", nil, nil);
+
+                            else
+
+                                local SplitDelimiterLength  = string.len(GBRadio_Localisation.SPLIT_DELIMITER);
+                                local ChopPosition          = ( 255 - ( RadioFluffLength + SplitDelimiterLength + ChopThreshold + SplitDelimiterLength ) );
+                                local ChoppedString = {
+                                    strsub(DecryptedCommsData["Message"], 0, ChopPosition ) .. GBRadio_Localisation.SPLIT_DELIMITER,
+                                    GBRadio_Localisation.SPLIT_DELIMITER .. strsub(DecryptedCommsData["Message"], ChopPosition, MessageLength)
+                                }
+
+                                SendChatMessage(FormattedRadioMessage .. ChoppedString[1], "EMOTE", nil, nil);
+                                SendChatMessage(ChoppedString[2], "EMOTE", nil, nil);
+                            end
+
                         else
-                        
-                            local SplitDelimiterLength  = string.len(GBRadio_Localisation.SPLIT_DELIMITER);
-                            local ChopPosition          = ( 255 - ( RadioFluffLength + SplitDelimiterLength + ChopThreshold + SplitDelimiterLength ) );
-                            local ChoppedString = {
-                                strsub(DecryptedCommsData["Message"], 0, ChopPosition ) .. GBRadio_Localisation.SPLIT_DELIMITER,
-                                GBRadio_Localisation.SPLIT_DELIMITER .. strsub(DecryptedCommsData["Message"], ChopPosition, MessageLength)
-                            }
-                            
-                            SendChatMessage(FormattedRadioMessage .. ChoppedString[1], "EMOTE", nil, nil);
-                            SendChatMessage(ChoppedString[2], "EMOTE", nil, nil);
+
+                            SendChatMessage(string.format(GBRadio.db.char.EmoteReceiveHidden, string.lower(GBRadio.db.char["Name"]), MurmurNoise), "EMOTE", nil, nil);
+
                         end
-                        
-                    else
-                    
-                        SendChatMessage(string.format(GBRadio.db.char.EmoteReceiveHidden, string.lower(GBRadio.db.char["Name"]), MurmurNoise), "EMOTE", nil, nil);
-                   
+
                     end
-                    
                 end
                     
                 if GBRadio.db.char["PlaySounds"] == true then
@@ -793,7 +857,8 @@ function GBRadio:OnInitialize()
     self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("GBRadio", "GBRadio");
     self:RegisterChatCommand("gbr", "ChatCommandHandler");
     self:RegisterChatCommand("bb", "SendMessage");
-    --self:RegisterChatCommand("gbrdebug", "SendDummyMessage");
+    self:RegisterChatCommand("pb", "SendPanicMessage");
+    self:RegisterChatCommand("gbrdebug", "SendDummyMessage");
 
     self:RegisterAddonChannel();
 

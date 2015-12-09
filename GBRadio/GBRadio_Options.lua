@@ -168,6 +168,19 @@ GBRadio.OptionsTable = {
                     
                 },
                 
+                panicemotes = {
+                
+                    name        = "Panic Emote",
+                    desc        = "Display an emote when you use your panic button.",
+                    type        = "toggle",
+                    set         = function(info, val) GBRadio.db.char["PanicEmotes"] = val; end,
+                    get         = function(info) return GBRadio.db.char["PanicEmotes"] end,
+                    width       = "full",
+                    cmdHidden   = true,
+                    order       = 6
+                    
+                },
+                
                 metagaming = {
                 
                     name        = "Meta Gaming Mode",
@@ -177,7 +190,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["MetaGamingState"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 6
+                    order       = 7
                     
                 },
                 
@@ -190,7 +203,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["ShowTRP3Names"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 7
+                    order       = 8
                 
                 },
                 
@@ -204,7 +217,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio:GetDeviceEmoteNoises(); end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 8
+                    order       = 9
                     
                 },
                 
@@ -217,7 +230,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["EmoteReceive"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 9
+                    order       = 10
                     
                 },
                 
@@ -230,7 +243,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["EmoteReceiveHidden"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 10
+                    order       = 11
                     
                 },
                 
@@ -243,7 +256,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["EmoteSend"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 11
+                    order       = 12
                     
                 },
                 
@@ -256,7 +269,33 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["EmoteSendHidden"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 12
+                    order       = 13
+                    
+                },
+                
+                panicbuttonemote = {
+                
+                    name        = "Panic Button Emote",
+                    desc        = "This emote will fire when you type /panic.",
+                    type        = "input",
+                    set         = function(info, val) GBRadio.db.char["PanicButtonEmote"] = val; end,
+                    get         = function(info) return GBRadio.db.char["PanicButtonEmote"] end,
+                    width       = "full",
+                    cmdHidden   = true,
+                    order       = 14
+                    
+                },
+                
+                panicbuttonmessage = {
+                
+                    name        = "Panic Button Message",
+                    desc        = "This message will be sent to your default frequency when you type /panic.",
+                    type        = "input",
+                    set         = function(info, val) GBRadio.db.char["PanicButtonMessage"] = val; end,
+                    get         = function(info) return GBRadio.db.char["PanicButtonMessage"] end,
+                    width       = "full",
+                    cmdHidden   = true,
+                    order       = 15
                     
                 }
                 
@@ -606,11 +645,43 @@ GBRadio.OptionsTable = {
             
         },
         
+        isolatedmode = {
+        
+            name        = "Isolated mode",
+            desc        = "Restrict messages to guild members only.",
+            type        = "toggle",
+            set         = function(info, val) GBRadio.db.char["IsolatedMode"] = val; end,
+            get         = function(info) return GBRadio.db.char["IsolatedMode"]; end,
+            width       = "full",
+            order       = 9
+            
+        },
+        
+        isolatedmodedesc = {
+        
+            name        = "Toggles between sending and receiving messages from only guild members on the same radio frequencies, or everyone on the same radio frequencies.",
+            type        = "description",
+            order       = 10
+            
+        },
+        
         send = {
             name            = "Send message",
             desc            = "<message> - Send a message through your comms device. |cFF00C0FFYou can also type the short-hand version:|r /bb <message>",
             type            = "input",
             set             = function(info, val) GBRadio:SendMessage(val); end,
+            width           = "full",
+            guiHidden       = true,
+            dialogHidden    = true,
+            dropdownHidden  = true
+            
+        },
+        
+        panic = {
+            name            = "Panic button",
+            desc            = "For emergency use. Sends a distress message to your current frequency. |cFF00C0FFYou can also type the short-hand version:|r /pb",
+            type            = "input",
+            set             = function(info, val) GBRadio:SendPanicMessage(); end,
             width           = "full",
             guiHidden       = true,
             dialogHidden    = true,
