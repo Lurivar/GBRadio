@@ -35,7 +35,8 @@ GBRadio_PresetOptions["BuzzBox"] = {
         ["TransmitterLowRange"]         = 500,
         ["TransmitterMedRange"]         = 600,
         ["TransmitterHighRange"]        = 650,
-        ["MessageColour"]               = {0.419607843137255,0.592156862745098,1,1}
+        ["MessageColour"]               = {0.419607843137255,0.592156862745098,1,1},
+        ["SquelchTimer"]                = 5
             
     }
 
@@ -76,7 +77,8 @@ GBRadio_PresetOptions["CommunicationRing"] = {
         ["TransmitterLowRange"]         = 500,
         ["TransmitterMedRange"]         = 600,
         ["TransmitterHighRange"]        = 650,
-        ["MessageColour"]               = {0.419607843137255,0.592156862745098,1,1}
+        ["MessageColour"]               = {0.419607843137255,0.592156862745098,1,1},
+        ["SquelchTimer"]                = 5
         
     }
 

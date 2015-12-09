@@ -711,10 +711,10 @@ function GBRadio.ReceiveMessage(Frequency, CommsData, Method, SenderName)
                 
                 -- If the last emote was sent more than or equal to 10 seconds ago, then we can fire off another message received emote
                 -- This just helps prevent generating constant emotes if you have a busy walker channel
-                if GBRadio.LastTime ~= 0 and GBRadio.CurrentTime - GBRadio.LastTime >= 10 then
-                    
+                if GBRadio.CurrentTime - GBRadio.LastTime >= GBRadio.db.char["SquelchTimer"] then
+
                     GBRadio.LastTime = GBRadio.CurrentTime;
-            
+
                     if GBRadio.db.char["Emotes"] == true then
 
                         local MurmurNoiseTable = GBRadio:GetDeviceEmoteNoises(true); -- Get as table, rather than string with false
@@ -751,11 +751,12 @@ function GBRadio.ReceiveMessage(Frequency, CommsData, Method, SenderName)
                         end
 
                     end
-                end
                     
-                if GBRadio.db.char["PlaySounds"] == true then
-                
-                    GBRadio:PlayRadioCrackle();
+                    if GBRadio.db.char["PlaySounds"] == true then
+
+                        GBRadio:PlayRadioCrackle();
+
+                    end
                     
                 end
                 

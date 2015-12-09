@@ -128,6 +128,24 @@ GBRadio.OptionsTable = {
                     order       = 2
                 },
             
+                squelchtimer = {
+                
+                    name        = "Squelch",
+                    desc        = "Supresses message received emotes and sounds for the specified time, starting when a message received emote is fired. This setting helps prevent message received emote spam on busy comm frequencies.",
+                    type        = "range",
+                    set         = function(info, val) GBRadio.db.char["SquelchTimer"] = val; end,
+                    get         = function(info) return GBRadio.db.char["SquelchTimer"] end,
+                    width       = "full",
+                    min         = 0,
+                    max         = 10,
+                    softMin     = 0,
+                    softMax     = 10,
+                    step        = 1,
+                    cmdHidden   = true,
+                    order       = 3
+                    
+                },
+            
                 speech = {
                 
                     name        = "Speech",
@@ -137,7 +155,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["Speech"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 3
+                    order       = 4
                     
                 },
                 
@@ -150,7 +168,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["Emotes"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 4
+                    order       = 5
                     
                 },
                 
@@ -164,7 +182,7 @@ GBRadio.OptionsTable = {
                     confirm     = function() return "|cFFFF0000WARNING!|r\n\nThis addon does not filter profanity from messages!\n\nBy disabling redacted emotes, messages sent by other players will be automatically relayed into an emote by this addon when you receive a message.\n\nRedacted emotes is automatically enabled because Blizzard always holds you responsible for all messages that are sent by your client, regardless of who or what writes them!\n\nWhilst disabling redacted emotes improves the realism of using a communication device, you should only disable it if you trust that EVERYONE in your guild will not swear, send racist remarks or generally break World of Warcraft's rules when sending messages.\n\nIf you are unsure, it's recommended that you leave redacted emotes enabled!" end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 5
+                    order       = 6
                     
                 },
                 
@@ -177,7 +195,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["PanicEmotes"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 6
+                    order       = 7
                     
                 },
                 
@@ -190,7 +208,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["MetaGamingState"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 7
+                    order       = 8
                     
                 },
                 
@@ -203,7 +221,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["ShowTRP3Names"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 8
+                    order       = 9
                 
                 },
                 
@@ -217,7 +235,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio:GetDeviceEmoteNoises(); end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 9
+                    order       = 10
                     
                 },
                 
@@ -230,7 +248,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["EmoteReceive"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 10
+                    order       = 11
                     
                 },
                 
@@ -243,7 +261,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["EmoteReceiveHidden"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 11
+                    order       = 12
                     
                 },
                 
@@ -256,7 +274,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["EmoteSend"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 12
+                    order       = 13
                     
                 },
                 
@@ -269,7 +287,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["EmoteSendHidden"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 13
+                    order       = 14
                     
                 },
                 
@@ -282,7 +300,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["PanicButtonEmote"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 14
+                    order       = 15
                     
                 },
                 
@@ -295,7 +313,7 @@ GBRadio.OptionsTable = {
                     get         = function(info) return GBRadio.db.char["PanicButtonMessage"] end,
                     width       = "full",
                     cmdHidden   = true,
-                    order       = 15
+                    order       = 16
                     
                 }
                 
