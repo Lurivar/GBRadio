@@ -9,6 +9,7 @@ GBRadio_PresetOptions["BuzzBox"] = {
         ["Name"]                        = "Buzz Box",
         ["MetaGamingState"]             = false,
         ["Emotes"]                      = true,
+        ["SendEmotes"]                  = true,
         ["RedactedEmotes"]              = true,
         ["Speech"]                      = true,
         ["PlaySounds"]                  = true,
@@ -27,7 +28,7 @@ GBRadio_PresetOptions["BuzzBox"] = {
         ["EmoteSendHidden"]             = "murmurs something into %s %s.",
         ["PanicButtonEmote"]            = "presses a button on %s %s.",
         ["PanicButtonMessage"]          = "%s needs urgent assistance at %s. Coordinates roughly %s.",
-        ["Transmitters"]                = { { ["x"] = 53, ["y"] = 52, ["Area"] = "Stormwind City" } },
+        ["Transmitters"]                = { { ["x"] = 51, ["y"] = 48, ["Area"] = "Stormwind City" } },
         ["UseTransmitters"]             = false,
         ["DistanceInYards"]             = true,
         ["TransmitterMaxRange"]         = 700,
@@ -36,7 +37,8 @@ GBRadio_PresetOptions["BuzzBox"] = {
         ["TransmitterMedRange"]         = 600,
         ["TransmitterHighRange"]        = 650,
         ["MessageColour"]               = {0.419607843137255,0.592156862745098,1,1},
-        ["SquelchTimer"]                = 5
+        ["SquelchTimer"]                = 5,
+        ["GBRadio_VERSION"]             = GBRadio_VERSION
             
     }
 
@@ -51,6 +53,7 @@ GBRadio_PresetOptions["CommunicationRing"] = {
         ["Name"]                        = "Communication Ring",
         ["MetaGamingState"]             = true,
         ["Emotes"]                      = true,
+        ["SendEmotes"]                  = true,
         ["RedactedEmotes"]              = true,
         ["Speech"]                      = false,
         ["PlaySounds"]                  = true,
@@ -69,7 +72,7 @@ GBRadio_PresetOptions["CommunicationRing"] = {
         ["EmoteSendHidden"]             = "taps %s %s.",
         ["PanicButtonEmote"]            = "taps %s %s.",
         ["PanicButtonMessage"]          = "%s needs urgent assistance at %s. Coordinates roughly %s.",
-        ["Transmitters"]                = { { ["x"] = 53, ["y"] = 52, ["Area"] = "Stormwind City" } },
+        ["Transmitters"]                = { { ["x"] = 51, ["y"] = 48, ["Area"] = "Stormwind City" } },
         ["UseTransmitters"]             = false,
         ["DistanceInYards"]             = true,
         ["TransmitterMaxRange"]         = 5,
@@ -78,7 +81,8 @@ GBRadio_PresetOptions["CommunicationRing"] = {
         ["TransmitterMedRange"]         = 600,
         ["TransmitterHighRange"]        = 650,
         ["MessageColour"]               = {0.419607843137255,0.592156862745098,1,1},
-        ["SquelchTimer"]                = 5
+        ["SquelchTimer"]                = 5,
+        ["GBRadio_VERSION"]             = GBRadio_VERSION
         
     }
 

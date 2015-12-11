@@ -488,6 +488,12 @@ end;
 
 function GBRadio:SendMessage(GBRadioMessage, MessageType)
 
+    --[[
+        Expected message types-
+            "PANIC"     - Panic button was hit
+            "WHISPER"   - User wants to make a quiet message
+    ]]
+
     local MessageData   = {};
     local MessageType = MessageType or false;
     local ChatFrame     = _G["ChatFrame" .. self.db.char["OutputChatFrame"]];
@@ -511,9 +517,9 @@ function GBRadio:SendMessage(GBRadioMessage, MessageType)
         
             if MessageType ~= "PANIC" then   
             
-                if self.db.char["Emotes"] == true then
+                if self.db.char["SendEmotes"] == true then
 
-                    if self.db.char["Speech"] == true then
+                    if self.db.char["Speech"] == true and MessageType ~= "WHISPER" then
 
                         SendChatMessage(string.format(GBRadio.db.char.EmoteSend, self:GetTextGender(), string.lower(GBRadio.db.char["Name"]), GBRadio_Localisation.SPLIT_DELIMITER), "EMOTE", nil, nil);
                     else
@@ -524,7 +530,7 @@ function GBRadio:SendMessage(GBRadioMessage, MessageType)
 
                 end
 
-                if self.db.char["Speech"] == true then
+                if self.db.char["Speech"] == true and MessageType ~= "WHISPER" then
 
                     SendChatMessage(GBRadioMessage, "SAY", DEFAULT_CHAT_FRAME.editBox.LanguageID, nil);
 
@@ -589,6 +595,8 @@ function GBRadio:SendMessage(GBRadioMessage, MessageType)
             else
             
                 MessageData = self:Serialize({ ["SenderRPName"] = TRP3_Name, ["Message"] = GBRadioMessage, ["Static"] = Static });
+                
+                    print(MessageData);
                 self:DelayFunction(self.db.char["MsgSendDelay"], GBRadio.SendCommMessage, self, ChannelPrefix[self.db.char["PrimaryChannelPrefix"]], MessageData, MessageTarget, MessagePlayer, self.MessagePriority);
             
             end
@@ -600,6 +608,12 @@ function GBRadio:SendMessage(GBRadioMessage, MessageType)
         ChatFrame:AddMessage(string.format(GBRadio_Localisation.NOTICE_RADIO_IS_OFF, self.db.char["Name"], string.lower(self.db.char["Name"])), self.db.char["MessageColour"][1], self.db.char["MessageColour"][2], self.db.char["MessageColour"][3]);
     
     end
+    
+end;
+
+function GBRadio:SendQuietMessage(message)
+
+    self:SendMessage(message, "WHISPER");
     
 end;
 
@@ -837,6 +851,24 @@ function GBRadio:ShowHistory(MessagesToShow)
 
 end;
 
+function GBRadio:UpdateRepair()
+
+    if GBRadio_VERSION ~= self.db.char["GBRadio_VERSION"] then
+    
+        local ChatFrame         = _G["ChatFrame" .. self.db.char["OutputChatFrame"]];
+
+        for k,v in pairs(self.db.char) do
+
+            if self.db.char[k] == nil then
+                self.db.char[k] = GBRadio_PresetOptions["BuzzBox"].char[k];
+            end
+        
+        end
+    
+    end
+
+end;
+
 function GBRadio:ChatCommandHandler(input)
 
     local command, text = input:match("^(%S*)%s*(.-)$");
@@ -858,8 +890,8 @@ function GBRadio:OnInitialize()
     self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("GBRadio", "GBRadio");
     self:RegisterChatCommand("gbr", "ChatCommandHandler");
     self:RegisterChatCommand("bb", "SendMessage");
+    self:RegisterChatCommand("wbb", "SendQuietMessage");
     self:RegisterChatCommand("pb", "SendPanicMessage");
-    self:RegisterChatCommand("gbrdebug", "SendDummyMessage");
 
     self:RegisterAddonChannel();
     
@@ -871,6 +903,8 @@ function GBRadio:OnInitialize()
     end
     
     frameMA:SetScript("OnEvent", frameMA.OnEvent);
+    
+    self:UpdateRepair();
 
 end;
 

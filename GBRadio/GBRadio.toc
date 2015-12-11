@@ -4,10 +4,10 @@
 ## SavedVariables: GBRadioDB
 ## DefaultState: enabled
 ## Author: Nasias Darkstar
-## Version: 2.0
+## Version: 2.1
 embeds.xml
-localisation/default.lua
 GBRadio_Pre.lua
+localisation/default.lua
 GBRadio_Presets.lua
 GBRadio_Options.lua
 GBRadio.lua
