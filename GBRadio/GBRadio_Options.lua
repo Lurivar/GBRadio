@@ -1,7 +1,7 @@
 GBRadio.OptionsTable = {
 
     type        = "group",
-    name        = GBRadio_Version,
+    name        = GBRadio_Version_String,
     childGroups = "tree",
     handler     = GBRadio,
     
@@ -161,11 +161,24 @@ GBRadio.OptionsTable = {
                 
                 emotes = {
                 
-                    name        = "Emotes",
-                    desc        = "Display emotes when you send/receive a communication.\n\nNOTE: Disabling this feature will disable communication sounds, and cause sound settings to be ignored.",
+                    name        = "Receive Emotes",
+                    desc        = "Display emotes when you receive a communication.\n\nNOTE: Disabling this feature will disable communication sounds, and cause sound settings to be ignored.",
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["Emotes"] = val; end,
                     get         = function(info) return GBRadio.db.char["Emotes"] end,
+                    width       = "full",
+                    cmdHidden   = true,
+                    order       = 5
+                    
+                },
+                
+                sendemotes = {
+                
+                    name        = "Send Emotes",
+                    desc        = "Display emotes when you send a communication.",
+                    type        = "toggle",
+                    set         = function(info, val) GBRadio.db.char["SendEmotes"] = val; end,
+                    get         = function(info) return GBRadio.db.char["SendEmotes"] end,
                     width       = "full",
                     cmdHidden   = true,
                     order       = 5
@@ -294,7 +307,7 @@ GBRadio.OptionsTable = {
                 panicbuttonemote = {
                 
                     name        = "Panic Button Emote",
-                    desc        = "This emote will fire when you type /panic.",
+                    desc        = "This emote will fire when you type /gbr panic or /pb.",
                     type        = "input",
                     set         = function(info, val) GBRadio.db.char["PanicButtonEmote"] = val; end,
                     get         = function(info) return GBRadio.db.char["PanicButtonEmote"] end,
@@ -633,7 +646,27 @@ GBRadio.OptionsTable = {
         
                 Msg = {
                 
-                    name        = "Thank you for using GBRadio!\n\nGBRadio was developed with communication in mind. Many guard-based roleplaying guilds use radios (or walkers!), and the aim of this addon is to make that as easy and seamless as possible.\n\nThis addon uses the World of Warcraft addon channel to communicate between players, creating a secure communication environment that can't be invaded by unauthorised players!\n\n|cFF82C2FFAuthor:|r Nasias @ Argent Dawn (EU)\n|cFF82C2FFContact:|r n@siasdarkstar.com\n\n|cFF82C2FFHelp, updates & changelog for BETA:|r\nhttp://www.nasiasdarkstar.com/GBRadio",
+                    name        = "Thank you for using GBRadio!\n\nGBRadio was developed with communication in mind. Many guard-based roleplaying guilds use radios (or walkers!), and the aim of this addon is to make that as easy and seamless as possible.\n\nA special thanks to the following people and guilds for their help in testing this addon, providing feedback, and giving suggestions:\n\nEtterna @ Argent Dawn\nMiléan @ Argent Dawn\nDidonus @ Argent Dawn\nHarrvey @ Argent Dawn\nYarwood @ Argent Dawn\nLawri @ Argent Dawn\n\nEye of Dalaran @ Argent Dawn\nStormwind Investigations @ Argent Dawn\nStormwind City Guard @ Argent Dawn\n\n|cFF82C2FFAuthor:|r Nasias @ Argent Dawn (EU)\n|cFF82C2FFContact:|r n@siasdarkstar.com\n\n|cFF82C2FFHelp, updates & changelog for BETA:|r\nhttp://www.nasiasdarkstar.com/GBRadio",
+                    type        = "description",
+                    fontSize    = "medium",    
+                    order       = 1
+                    
+                }
+            
+            }
+        },
+        
+        helppage = {
+            
+            type        = "group",
+            name        = "Help",
+            cmdHidden   = true,
+            order       = 7,
+            args        = {
+        
+                Msg = {
+                
+                    name        = "Quick command cheatsheet:\n\n/bb <your message> -- Sends a message.\n/wbb <your message> -- Sends a discreet message.\n/gbr -- Shows all available slash commands\n/gbr activate -- Toggles your device on or off.\n/pb -- Sends a distress message.",
                     type        = "description",
                     fontSize    = "medium",    
                     order       = 1
@@ -651,7 +684,7 @@ GBRadio.OptionsTable = {
             set         = function(info, val) GBRadio:ToggleRadioState(info, val); end,
             get         = function(info) return GBRadio.db.char["Active"]; end,
             width       = "full",
-            order       = 7
+            order       = 8
             
         },
         
@@ -659,7 +692,7 @@ GBRadio.OptionsTable = {
         
             name        = "Switch your communication device on or off. This can also be done via slash command!",
             type        = "description",
-            order       = 8
+            order       = 9
             
         },
         
@@ -671,7 +704,8 @@ GBRadio.OptionsTable = {
             set         = function(info, val) GBRadio.db.char["IsolatedMode"] = val; end,
             get         = function(info) return GBRadio.db.char["IsolatedMode"]; end,
             width       = "full",
-            order       = 9
+            cmdHidden   = true,
+            order       = 10
             
         },
         
@@ -679,7 +713,7 @@ GBRadio.OptionsTable = {
         
             name        = "Toggles between sending and receiving messages from only guild members on the same radio frequencies, or everyone on the same radio frequencies.",
             type        = "description",
-            order       = 10
+            order       = 11
             
         },
         
