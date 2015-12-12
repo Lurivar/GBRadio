@@ -84,12 +84,20 @@ end;
 function GBRadio:TextareaToCSV(InputText)
 
     local regex = "[^a-zA-Z0-9\n]";
-    local InputText = string.gsub(InputText, regex, "");
-    -- Removes duplicated newline entries
+    --local InputText; = string.gsub(InputText, regex, nil);
+    -- Removes blank newline entries
+    InputText = string.gsub(InputText, regex, "");
     InputText = string.gsub(InputText, "[\n]+", ",");
     
     if InputText == "," then
         InputText = "";
+    end
+    
+    -- Get end character of CSV list to check if it's a comma too
+    local EndChar = string.sub(InputText, string.len(InputText));
+    
+    if EndChar == "," then
+        return string.sub(InputText, 1, string.len(InputText) -1);
     end
     
     return InputText;
