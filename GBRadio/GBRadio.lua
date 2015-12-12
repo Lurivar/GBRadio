@@ -861,17 +861,25 @@ end;
 
 function GBRadio:UpdateRepair()
 
-    if GBRadio_VERSION ~= self.db.char["GBRadio_VERSION"] then
+    if self.db.char["GBRadio_VERSION_SET"] == nil then
     
-        local ChatFrame         = _G["ChatFrame" .. self.db.char["OutputChatFrame"]];
+        self.db.char["GBRadio_VERSION_SET"] = 0;
+        
+    end
+
+    if GBRadio_VERSION ~= self.db.char["GBRadio_VERSION_SET"] then
 
         for k,v in pairs(self.db.char) do
 
             if self.db.char[k] == nil then
+            
                 self.db.char[k] = GBRadio_PresetOptions["BuzzBox"].char[k];
+                
             end
         
         end
+    
+        self.db.char["GBRadio_VERSION_SET"] = GBRadio_VERSION;
     
     end
 
