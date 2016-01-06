@@ -603,8 +603,6 @@ function GBRadio:SendMessage(GBRadioMessage, MessageType)
             else
             
                 MessageData = self:Serialize({ ["SenderRPName"] = TRP3_Name, ["Message"] = GBRadioMessage, ["Static"] = Static });
-                
-                    print(MessageData);
                 self:DelayFunction(self.db.char["MsgSendDelay"], GBRadio.SendCommMessage, self, ChannelPrefix[self.db.char["PrimaryChannelPrefix"]], MessageData, MessageTarget, MessagePlayer, self.MessagePriority);
             
             end
