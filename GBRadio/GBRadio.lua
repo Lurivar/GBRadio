@@ -71,6 +71,31 @@ function GBRadio:FetchPresetList()
 
 end;
 
+function GBRadio:FakeDistressMsg(CharName)
+    
+    local CharacterName;
+    local SubZone;
+    local Location;
+    local Zone;
+    
+    Location = self:GetPlayerLocation();
+    SubZone = GetSubZoneText();
+    
+    if string.len(SubZone) ~= 0 then
+        Zone = SubZone .. ", " .. Location["Area"];
+    else
+        Zone = Location["Area"];
+    end
+        
+    CharacterName = CharName
+    
+    local PanicMessage = string.format(GBRadio.db.char["PanicButtonMessage"], CharacterName, Zone, self:Round(Location["x"], 2) .. ", " .. self:Round(Location["y"], 2))
+      
+    self:SendMessage(PanicMessage, "PANIC", CharName);
+    
+
+end;
+
 function GBRadio:SetPreset(PresetTable)
     
     for k,v in pairs(GBRadio.db.char) do
@@ -208,7 +233,7 @@ function GBRadio:GetClosestTransmitter(Location)
     local AngleDegs;
     local DistanceMeasurement;
     local ClosestTransmitter = { ["Distance"] = -1, ["DistanceYrds"] = -1, ["x"] = 0, ["y"] = 0 };
-    local DistanceMeasurementKey       
+    local DistanceMeasurementKey     
     
     if Transmitters == false then 
     
@@ -221,7 +246,8 @@ function GBRadio:GetClosestTransmitter(Location)
         if ( string.lower(v["Area"]) == string.lower(Location["Area"]) ) --[[and ( string.lower(v["Area"]) == string.lower(GBRMapFiles:MapLocalize(Location["Map"])) )]] then
         
             DistanceCoords  = self:DistanceVector(v, Location, false);
-            DistanceYrds    = GBRMapFiles:DistanceAndDirection(Location["Map"], 1, v["x"]/100, v["y"]/100 );
+            --DistanceYrds    = GBRMapFiles:DistanceAndDirection(Location["Map"], 1, v["x"]/100, v["y"]/100 );
+            DistanceYrds    = GBRMapFiles:GetZoneDistance(Location["Map"], 1, Location["x"]/100, Location["y"]/100, Location["Map"], 1, v["x"]/100, v["y"]/100 );
             
                     if self.db.char["DistanceInYards"] == true then
                     
@@ -494,7 +520,7 @@ function GBRadio:SendDummyMessage()
     
 end;
 
-function GBRadio:SendMessage(GBRadioMessage, MessageType)
+function GBRadio:SendMessage(GBRadioMessage, MessageType, Override)
 
     --[[
         Expected message types-
@@ -549,6 +575,12 @@ function GBRadio:SendMessage(GBRadioMessage, MessageType)
             if self:TRP3_Installed() == true then
             
                 TRP3_Name = self:TRP3_GetRPName();
+            
+            end
+            
+            if Override ~= nil then
+            
+                TRP3_Name = Override;
             
             end
             
