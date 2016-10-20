@@ -1,0 +1,9 @@
+GBR = {}
+
+GBR.DEFAULT_FREQUENCY = "GBRadio"
+GBR.DEFAULT_FREQ_COLOUR = "ffffff"
+GBR.DEFAULT_FREQ_WINDOW = 1
+GBR.MAX_FREQ_LEN = 10
+GBR.MAX_COLOUR_LEN = 6 -- Hex
+GBR.MAX_WINDOW_NUM = 8 -- Wow currently only supports 8 different chat windows
+GBR.MIN_WINDOW_NUM = 1
