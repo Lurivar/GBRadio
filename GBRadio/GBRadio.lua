@@ -11,7 +11,7 @@ function GBRadio:DelayFunction(delay, func, ...)
     return false;
   end
   if(waitFrame == nil) then
-    waitFrame = CreateFrame("Frame","WaitFrame", UIParent);
+    waitFrame = CreateFrame("Frame","GBRWaitFrame", UIParent);
     waitFrame:SetScript("onUpdate",function (self,elapse)
       local count = #waitTable;
       local i = 1;
@@ -247,7 +247,7 @@ function GBRadio:GetClosestTransmitter(Location)
         
             DistanceCoords  = self:DistanceVector(v, Location, false);
             --DistanceYrds    = GBRMapFiles:DistanceAndDirection(Location["Map"], 1, v["x"]/100, v["y"]/100 );
-            DistanceYrds    = GBRMapFiles:GetZoneDistance(Location["Map"], 1, Location["x"]/100, Location["y"]/100, Location["Map"], 1, v["x"]/100, v["y"]/100 );
+            DistanceYrds    = GBRMapFiles:GetZoneDistance(Location["Map"], Location["x"]/100, Location["y"]/100, Location["Map"], v["x"]/100, v["y"]/100 );
             
                     if self.db.char["DistanceInYards"] == true then
                     
@@ -418,12 +418,12 @@ end;
 
 function GBRadio:GetPlayerLocation()
 
-    SetMapToCurrentZone() ;
-    local PosX, PosY    = GetPlayerMapPosition("player");
+    local uiMapID       = C_Map.GetBestMapForUnit("player");
+    local Pos           = C_Map.GetPlayerMapPosition(uiMapID, "player");
     local Area          = GetZoneText();
-    local Map           = GetMapInfo();
+    local Map           = C_Map.GetMapInfo(uiMapID).mapID;
     
-    return { ["x"] = (PosX * 100), ["y"] = (PosY * 100), ["Area"] = Area, ["Map"] = Map };
+    return { ["x"] = (Pos.x * 100), ["y"] = (Pos.y * 100), ["Area"] = Area, ["Map"] = Map };
 
 end;
 
@@ -514,8 +514,9 @@ end;
 
 function GBRadio:SendDummyMessage()
     
-    ChannelPrefix = "GBRADIO";
-    local MessageData = self:Serialize({ SenderRPName = "Communication System", Message = "This is a test of the communications system.", Static = 0 });
+    local ChannelPrefix = self:GetCommFrequencies(true)[self.db.char["PrimaryChannelPrefix"]];
+    local MessageData = self:Serialize({ SenderRPName = "Communication System", Message = "<A channel operator is testing the communication network>", Static = 0 });
+    print(ChannelPrefix, MessageData, self.MessageTarget, self.MessagePlayer, self.MessagePriority);
     self:SendCommMessage(ChannelPrefix, MessageData, self.MessageTarget, self.MessagePlayer, self.MessagePriority);
     
 end;
@@ -541,7 +542,11 @@ function GBRadio:SendMessage(GBRadioMessage, MessageType, Override)
     
     if GBRadio.db.char["IsolatedMode"] == false then
         MessageTarget = "CHANNEL";
-        MessagePlayer = tostring(GetChannelName(self.GHI_AddonChannelPub));
+        --if self:TRP3_Installed() == true then
+          MessagePlayer = GetChannelName(self.GHI_AddonChannelPub);
+        --else
+        --  MessagePlayer = tostring(GetChannelName(self.GHI_AddonChannelPub));
+        --end
     end
     
 
