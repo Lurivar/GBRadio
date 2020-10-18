@@ -1,10 +1,10 @@
-## Interface: 80000
+## Interface: 90001
 ## Title: GBRadio
 ## Notes: In-character communications for roleplaying guilds.
 ## SavedVariables: GBRadioDB
 ## DefaultState: enabled
 ## Author: Nasias Darkstar
-## Version: 2.2.2
+## Version: 2.2.3
 embeds.xml
 GBRadio_Pre.lua
 localisation/default.lua
