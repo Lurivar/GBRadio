@@ -108,7 +108,7 @@ end;
 
 function GBRadio:TextareaToCSV(InputText)
 
-    local regex = "[^a-zA-Z0-9\n]";
+    local regex = "[^A-Za-zÀ-ÖØ-öø-ÿ0-9%.\n]";
     --local InputText; = string.gsub(InputText, regex, nil);
     -- Removes blank newline entries
     InputText = string.gsub(InputText, regex, "");
@@ -344,13 +344,13 @@ function GBRadio:AddInterferenceToMessage(Message, Level)
         
         for k, v in pairs(tmp) do
         
-            InterferenceMessage = InterferenceMessage .. v["StartPoint"] .. " *static* " .. v["EndPoint"];
+            InterferenceMessage = InterferenceMessage .. v["StartPoint"] .. GBRadio_Localisation.STATIC_SOUND .. v["EndPoint"];
         
         end
         
     else
     
-        InterferenceMessage = " *static* ";
+        InterferenceMessage = GBRadio_Localisation.STATIC;
         
     end
     
