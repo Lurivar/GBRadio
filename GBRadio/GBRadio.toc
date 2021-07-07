@@ -1,4 +1,4 @@
-## Interface: 80000
+## Interface: 90001
 ## Title: GBRadio
 ## Notes: In-character communications for roleplaying guilds.
 ## SavedVariables: GBRadioDB

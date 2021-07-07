@@ -471,19 +471,10 @@ function GBRadio:PlayRadioCrackle()
         
         self:SendCommMessage(GBRadio.GHI_Prefix, GBRadio.GHI_MsgPrefix .. SerialisedCommMsg, "CHANNEL", tostring(AddonChannel))
     else
-        PlaySoundFile(self.db.char["DeviceSound"], "SFX");
+        PlaySound(self.db.char["DeviceSound"], "SFX");
     end
         
 
-end;
-
-function GBRadio:SendDummyMessage()
-    
-    local ChannelPrefix = self:GetCommFrequencies(true)[self.db.char["PrimaryChannelPrefix"]];
-    local MessageData = self:Serialize({ SenderRPName = "Communication System", Message = "<A channel operator is testing the communication network>", Static = 0 });
-    print(ChannelPrefix, MessageData, self.MessageTarget, self.MessagePlayer, self.MessagePriority);
-    self:SendCommMessage(ChannelPrefix, MessageData, self.MessageTarget, self.MessagePlayer, self.MessagePriority);
-    
 end;
 
 function GBRadio:SendMessage(GBRadioMessage, MessageType, Override)
