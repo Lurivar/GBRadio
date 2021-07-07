@@ -49,3 +49,6 @@ GBRadio_Localisation.ERROR_MSG_RECEIVE               = GBRadio_Localisation.PREF
 GBRadio_Localisation.IDENTIFY_CHAT_FRAME             = GBRadio_Localisation.PREFIX_MESSAGE .. GBRadio_Colour.Notice .. " IDENTIFICATION - This is chat frame %s";
 
 GBRadio_Localisation.SET_FREQUENCY					 = GBRadio_Localisation.PREFIX_MESSAGE .. " You change the frequency of your %s and put it on %s.";
+
+GBRadio_Localisation.STATIC                          = " *Static* "
+GBRadio_Localisation.STATIC_SOUND                    = " *kchrr* "
