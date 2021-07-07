@@ -78,7 +78,7 @@ function GBRadio:FakeDistressMsg(CharName)
     local Location;
     local Zone;
     
-    Location = self:GetPlayerLocation();
+    Location = self:GetPlayerCoordinates();
     SubZone = GetSubZoneText();
     
     if string.len(SubZone) ~= 0 then
@@ -201,7 +201,7 @@ function GBRadio:SetTransmitters(val)
 
     for k, v in pairs(firstStep) do
         tmp = { strsplit(",", v) };
-        secondStep[k] = { ["x"] = tmp[1], ["y"] = tmp[2], ["Area"] = tmp[3] };
+        secondStep[k] = { ["x"] = tmp[1], ["y"] = tmp[2], ["instanceId"] = tmp[3] };
     end
 
     return secondStep;
@@ -213,7 +213,7 @@ function GBRadio:GetTransmitters()
     local tmp = {};
     
     for k, v in pairs(self.db.char["Transmitters"]) do
-        tmp[k] = string.format("%s,%s,%s", v["x"], v["y"], v["Area"]);
+        tmp[k] = string.format("%s,%s,%s", v["x"], v["y"], v["instanceId"]);
     end
     
     tmp = table.concat(tmp, "\n");
@@ -224,92 +224,57 @@ end;
 
 function GBRadio:GetClosestTransmitter(Location)
 
-    Location    = Location or GBRadio:GetPlayerLocation();
-    local TransmitterDistances  = {}
+    Location                    = Location or GBRadio:GetPlayerCoordinates();
     local Transmitters          = self.db.char["Transmitters"];
-    local DistanceCoords;   -- Distance in cartesian coordinates
+    local ClosestTransmitter    = { ["Distance"] = -1, ["DistanceYrds"] = -1, ["x"] = 0, ["y"] = 0 };
     local DistanceYrds;     -- Distance in yards
-    local AngleRads;
-    local AngleDegs;
     local DistanceMeasurement;
-    local ClosestTransmitter = { ["Distance"] = -1, ["DistanceYrds"] = -1, ["x"] = 0, ["y"] = 0 };
-    local DistanceMeasurementKey     
-    
-    if Transmitters == false then 
-    
+    local DistanceMeasurementKey;
+
+    if Transmitters == false then
         return false;
-        
     end
-    
+
     for k, v in pairs(Transmitters) do
-        -- If the transmitter is in the same area as us, and the transmitters MAP translated to localisation is the same as the area we are in
-        if ( string.lower(v["Area"]) == string.lower(Location["Area"]) ) --[[and ( string.lower(v["Area"]) == string.lower(GBRMapFiles:MapLocalize(Location["Map"])) )]] then
-        
-            DistanceCoords  = self:DistanceVector(v, Location, false);
-            --DistanceYrds    = GBRMapFiles:DistanceAndDirection(Location["Map"], 1, v["x"]/100, v["y"]/100 );
-            DistanceYrds    = GBRMapFiles:GetZoneDistance(Location["Map"], Location["x"]/100, Location["y"]/100, Location["Map"], v["x"]/100, v["y"]/100 );
-            
-                    if self.db.char["DistanceInYards"] == true then
-                    
-                        DistanceMeasurement     = DistanceYrds;
-                        DistanceMeasurementKey  = "DistanceYrds";
-                        
-                    else
-                    
-                        DistanceMeasurement     = DistanceCoords;
-                        DistanceMeasurementKey = "Distance";
-                        
-                    end
-            
+        --ChatFrame:AddMessage(string.format("k : %s -- v : %s", k, v));
+        -- If the transmitter is in the same instanceId as us
+        -- Todo : Multiple instanceIds
+        if ( string.format("%s", v["instanceId"]) == string.format("%s", Location["instanceId"]) ) then
+            DistanceYrds    = GBRMapFiles:GetWorldDistance(Location["instanceId"], Location["x"], Location["y"], v["x"], v["y"] );
+            DistanceMeasurement     = DistanceYrds;
+            DistanceMeasurementKey  = "DistanceYrds";
+
             -- If this transmitter is closer than the previous transmitter, and a previous transmitter has already been selected -- Or if no transmitter in this zone has been selected
             if ( DistanceMeasurement < ClosestTransmitter[DistanceMeasurementKey] and ClosestTransmitter[DistanceMeasurementKey] ~= -1 ) or ( ClosestTransmitter[DistanceMeasurementKey] == -1 ) then
-
                 ClosestTransmitter = { 
-                    ["Distance"]        = DistanceCoords, 
+                    ["Distance"]        = DistanceYrds, 
                     ["DistanceYrds"]    = DistanceYrds,
                     ["x"]               = v["x"], 
                     ["y"]               = v["y"], 
                     ["PlayerLocation"]  = Location 
                 };
-                
             end
-            
         end
-        
     end
     
     return ClosestTransmitter;
     
 end;
 
-
-
 function GBRadio:ShowPlayerClosestTransmitter()
-
-    --math.atan2(y2-y1, x2-x1)
     local Transmitter       = self:GetClosestTransmitter();
     
     if Transmitter ~= false then
-    
         local Distance;
         local PlayerLocation        = Transmitter.PlayerLocation;
-        local TransmitterLocation   = string.format("X:%.2f, Y:%.2f", Transmitter["x"], Transmitter["y"] );
+        local TransmitterLocation   = string.format("X:%i, Y:%i", Transmitter["x"], Transmitter["y"] );
         
-        if self.db.char["DistanceInYards"] == true then
-        
-            Distance = string.format("%.2f yards", Transmitter["DistanceYrds"]);
-        
-        else
-        
-            Distance = string.format("%.2f points", Transmitter["Distance"]);
-        end
+        Distance = string.format("%i yards", Transmitter["DistanceYrds"]);
 
         local ChatFrame     = _G["ChatFrame" .. self.db.char["OutputChatFrame"]];
 
         ChatFrame:AddMessage(string.format(GBRadio_Localisation.NOTICE_CLOSEST_TRANSMITTER, self.db.char["Name"], Distance, TransmitterLocation), self.db.char["MessageColour"][1], self.db.char["MessageColour"][2], self.db.char["MessageColour"][3]);
-
     end
-
 end;
 
 function GBRadio:AddInterferenceToMessage(Message, Level)
@@ -594,15 +559,8 @@ function GBRadio:SendMessage(GBRadioMessage, MessageType, Override)
                 local ClosestTransmitter = self:GetClosestTransmitter();
                 local TransmitterRange;
                 
-                if self.db.char["DistanceInYards"] == true then
                 
-                    TransmitterRange = ClosestTransmitter["DistanceYrds"];
-                    
-                else
-                
-                    TransmitterRange = ClosestTransmitter["Distance"];
-                
-                end
+                TransmitterRange = ClosestTransmitter["DistanceYrds"];
 
                 if TransmitterRange < self.db.char["TransmitterMaxRange"] and TransmitterRange ~= -1 then
                 
@@ -667,7 +625,7 @@ function GBRadio:SendPanicMessage()
     local Location;
     local Zone;
     
-    Location = self:GetPlayerLocation();
+    Location = self:GetPlayerCoordinates();
     SubZone = GetSubZoneText();
     
     if string.len(SubZone) ~= 0 then
@@ -691,6 +649,23 @@ function GBRadio:SendPanicMessage()
       
     self:SendMessage(PanicMessage, "PANIC");
     
+end;
+
+function GBRadio:GetPlayerCoordinates()
+    local PosX, PosY, instanceId = GBRMapFiles:GetPlayerWorldPosition();
+    local Area          = GetZoneText();
+    local Map           = 0;
+
+    return { ["x"] = PosX, ["y"] = PosY, ["instanceId"] = instanceId, ["Area"] = Area, ["Map"] = Map };
+
+end;
+
+function GBRadio:GetCoordinates()
+    
+    local ChatFrame     = _G["ChatFrame" .. self.db.char["OutputChatFrame"]];        
+    local Pos           = self:GetPlayerCoordinates();
+
+    ChatFrame:AddMessage(string.format("X : %i -- Y : %i -- InstanceId : %i", Pos.x, Pos.y, Pos.instanceId));	
 end;
 
 function GBRadio.ReceiveMessage(Frequency, CommsData, Method, SenderName)
@@ -717,15 +692,7 @@ function GBRadio.ReceiveMessage(Frequency, CommsData, Method, SenderName)
                 local ClosestTransmitter = GBRadio:GetClosestTransmitter();
                 local TransmitterRange;
                 
-                if GBRadio.db.char["DistanceInYards"] == true then
-                
-                    TransmitterRange = ClosestTransmitter["DistanceYrds"];
-                    
-                else
-                
-                    TransmitterRange = ClosestTransmitter["Distance"];
-                
-                end
+                TransmitterRange = ClosestTransmitter["DistanceYrds"];
 
                 if TransmitterRange < GBRadio.db.char["TransmitterMaxRange"] and TransmitterRange ~= -1 then
                 

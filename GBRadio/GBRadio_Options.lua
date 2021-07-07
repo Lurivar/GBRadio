@@ -345,7 +345,7 @@ GBRadio.OptionsTable = {
                 transmitterlocations = {
                 
                     name        = "Transmitters",
-                    desc        = "Location (in coordinates and location) of transmitters that your device can utilise.\n\nNOTE: They must be in the following format: x,y,locationname\nThere are no spaces. Please seperate entries on a new line.",
+                    desc        = "Location (in coordinates and instanceId) of transmitters that your device can utilise.\n\nNOTE: They must be in the following format: x,y,instanceId\nThere are no spaces. Please seperate entries on a new line.",
                     type        = "input",
                     multiline   = 5,
                     set         = function(info, val) GBRadio.db.char["Transmitters"] = GBRadio:SetTransmitters(val); end,
@@ -740,8 +740,32 @@ GBRadio.OptionsTable = {
             dropdownHidden  = true
             
         },
-        
+        		
+		coord = {
+            name            = "Coord button",
+            desc            = "Tells you your coordinates to use with the transmitter mode.",
+            type            = "input",
+            set             = function(info, val) GBRadio:GetCoordinates(); end,
+            width           = "full",
+            guiHidden       = true,
+            dialogHidden    = true,
+            dropdownHidden  = true
+            
+        },
+
         distance = {
+            name            = "Distance Check",
+            desc            = "Tells you your current distance from the closest transmitter.",
+            type            = "input",
+            set             = function(info, val) GBRadio:ShowPlayerClosestTransmitter(); end,
+            width           = "full",
+            guiHidden       = true,
+            dialogHidden    = true,
+            dropdownHidden  = true
+        
+        },
+
+        dist = {
             name            = "Distance Check",
             desc            = "Tells you your current distance from the closest transmitter.",
             type            = "input",
