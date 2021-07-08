@@ -225,6 +225,7 @@ end;
 function GBRadio:GetClosestTransmitter(Location)
 
     Location                    = Location or GBRadio:GetPlayerCoordinates();
+    local ChatFrame             = _G["ChatFrame" .. self.db.char["OutputChatFrame"]];
     local Transmitters          = self.db.char["Transmitters"];
     local ClosestTransmitter    = { ["Distance"] = -1, ["DistanceYrds"] = -1, ["x"] = 0, ["y"] = 0 };
     local DistanceYrds;     -- Distance in yards
@@ -239,21 +240,25 @@ function GBRadio:GetClosestTransmitter(Location)
         --ChatFrame:AddMessage(string.format("k : %s -- v : %s", k, v));
         -- If the transmitter is in the same instanceId as us
         -- Todo : Multiple instanceIds
-        if ( string.format("%s", v["instanceId"]) == string.format("%s", Location["instanceId"]) ) then
-            DistanceYrds    = GBRMapFiles:GetWorldDistance(Location["instanceId"], Location["x"], Location["y"], v["x"], v["y"] );
-            DistanceMeasurement     = DistanceYrds;
-            DistanceMeasurementKey  = "DistanceYrds";
-
-            -- If this transmitter is closer than the previous transmitter, and a previous transmitter has already been selected -- Or if no transmitter in this zone has been selected
-            if ( DistanceMeasurement < ClosestTransmitter[DistanceMeasurementKey] and ClosestTransmitter[DistanceMeasurementKey] ~= -1 ) or ( ClosestTransmitter[DistanceMeasurementKey] == -1 ) then
-                ClosestTransmitter = { 
-                    ["Distance"]        = DistanceYrds, 
-                    ["DistanceYrds"]    = DistanceYrds,
-                    ["x"]               = v["x"], 
-                    ["y"]               = v["y"], 
-                    ["PlayerLocation"]  = Location 
-                };
-            end
+        
+        local instanceIDs = { strsplit('-', v["instanceId"]) }
+        for i, j in pairs(instanceIDs) do
+            if ( string.format("%s", j) == string.format("%s", Location["instanceId"]) ) then
+                DistanceYrds    = GBRMapFiles:GetWorldDistance(Location["instanceId"], Location["x"], Location["y"], v["x"], v["y"] );
+                DistanceMeasurement     = DistanceYrds;
+                DistanceMeasurementKey  = "DistanceYrds";
+    
+                -- If this transmitter is closer than the previous transmitter, and a previous transmitter has already been selected -- Or if no transmitter in this zone has been selected
+                if ( DistanceMeasurement < ClosestTransmitter[DistanceMeasurementKey] and ClosestTransmitter[DistanceMeasurementKey] ~= -1 ) or ( ClosestTransmitter[DistanceMeasurementKey] == -1 ) then
+                    ClosestTransmitter = { 
+                        ["Distance"]        = DistanceYrds, 
+                        ["DistanceYrds"]    = DistanceYrds,
+                        ["x"]               = v["x"], 
+                        ["y"]               = v["y"], 
+                        ["PlayerLocation"]  = Location 
+                    };
+                end
+            end    
         end
     end
     

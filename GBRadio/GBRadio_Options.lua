@@ -345,7 +345,7 @@ GBRadio.OptionsTable = {
                 transmitterlocations = {
                 
                     name        = "Transmitters",
-                    desc        = "Location (in coordinates and instanceId) of transmitters that your device can utilise.\n\nNOTE: They must be in the following format: x,y,instanceId\nThere are no spaces. Please seperate entries on a new line.",
+                    desc        = "Location (in coordinates and instanceId) of transmitters that your device can utilise.\n\nNOTE: They must be in the following format: x,y,instanceId\nThere are no spaces. You can put multiple InstanceIds by separating them with - . Please seperate entries on a new line.",
                     type        = "input",
                     multiline   = 5,
                     set         = function(info, val) GBRadio.db.char["Transmitters"] = GBRadio:SetTransmitters(val); end,
@@ -367,18 +367,6 @@ GBRadio.OptionsTable = {
                     cmdHidden   = true,
                     order       = 1
                     
-                },
-                
-                distanceinyards = {
-                
-                    name        = "Distance in Yards",
-                    desc        = "Enabling this will use yards as the primary unit of distance. Otherwise, it will use cartesian coordinate distances instead.",
-                    type        = "toggle",
-                    set         = function(info, val) GBRadio.db.char["DistanceInYards"] = val; end,
-                    get         = function(info) return GBRadio.db.char["DistanceInYards"]; end,
-                    width       = "full",
-                    cmdHidden   = true,
-                    order       = 2
                 },
                 
                 transmittermaxrange = {
@@ -801,6 +789,18 @@ GBRadio.OptionsTable = {
         },
         
         config = {
+            name            = "Open configuration",
+            desc            = "Open the configuration screen for GBRadio",
+            type            = "execute",
+            func            = function(info) InterfaceOptionsFrame_OpenToCategory("GBRadio"); InterfaceOptionsFrame_OpenToCategory("GBRadio"); end,
+            guiHidden       = true,
+            dialogHidden    = true,
+            dropdownHidden  = true,
+            order           = -1
+            
+        },
+
+        conf = {
             name            = "Open configuration",
             desc            = "Open the configuration screen for GBRadio",
             type            = "execute",
