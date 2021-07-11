@@ -10,15 +10,15 @@ GBRadio.OptionsTable = {
         textconfig = {
         
             type        = "group",
-            name        = "Device",
+            name        = GBRadio_Localisation.OPTION_NAME_textconfig,
             cmdHidden   = true,
             order       = 0,
             args        = {
         
                 name = {
                 
-                    name        = "Comms Device Name",
-                    desc        = "The name of your comms device\n\nNote: This is used in emotes to describe the type of device you have, as well as in messages.",
+                    name        = GBRadio_Localisation.OPTION_NAME_name,
+                    desc        = GBRadio_Localisation.OPTION_DESC_name,
                     type        = "input",
                     set         = function(info, val) GBRadio.db.char["Name"] = val; end,
                     get         = function(info) return GBRadio.db.char["Name"]; end,
@@ -30,8 +30,8 @@ GBRadio.OptionsTable = {
                 
                 channelprefix = {
                 
-                    name        = "Comm Frequencies",
-                    desc        = "Your comm frequencies enables you to send and receive communications from people using the same paticular frequency, but only in your guild.\n\nNote: Guilds may split their communication system up with different frequencies for different jobs. Make sure you're entering the right ones!",
+                    name        = GBRadio_Localisation.OPTION_NAME_channelprefix,
+                    desc        = GBRadio_Localisation.OPTION_DESC_channelprefix,
                     type        = "input",
                     set         = function(info, val) GBRadio:SetCommFrequencies(val); ReloadUI(); end,
                     get         = function(info) return GBRadio:GetCommFrequencies(); end,
@@ -44,7 +44,7 @@ GBRadio.OptionsTable = {
                 
                 primaryfrequency = {
                 
-                    name    = "Primary comm frequency",
+                    name    = GBRadio_Localisation.OPTION_NAME_primaryfrequency,
                     type    = "select",
                     values  = function(info) return GBRadio:GetCommFrequencies(true); end,
                     order   = 2,
@@ -57,8 +57,8 @@ GBRadio.OptionsTable = {
                 
                 msgsenddelay = {
                 
-                    name        = "Message send delay",
-                    desc        = "Delay (in seconds) between /saying a message and sending it over the comms channel.\n\nNOTE: If this setting is too low, then you run the risk of people receiving your comms message before you've actually said it out loud with /say.",
+                    name        = GBRadio_Localisation.OPTION_NAME_msgsenddelay,
+                    desc        = GBRadio_Localisation.OPTION_DESC_msgsenddelay,
                     type        = "range",
                     width       = "full",
                     min         = 0,
@@ -80,15 +80,15 @@ GBRadio.OptionsTable = {
         messageconfig = {
             
             type        = "group",
-            name        = "Messages",
+            name        = GBRadio_Localisation.OPTION_NAME_messageconfig,
             cmdHidden   = true,
             order       = 1,
             args        = {
                 
                 outputchatframe = {
                 
-                    name        = "Output Chat Frame",
-                    desc        = "Select which chat frame you want communication messages sent to.\n\nNote: This must be a valid number, otherwise your messages won't show.\n\nFind out proper frame ID's by pressing Identify Chat Frames, and then set the Output Chat Frame slider to match the number of the chat frame you'd like to use.",
+                    name        = GBRadio_Localisation.OPTION_NAME_outputchatframe,
+                    desc        = GBRadio_Localisation.OPTION_DESC_outputchatframe,
                     type        = "range",
                     width       = "full",
                     min         = 1,
@@ -105,8 +105,8 @@ GBRadio.OptionsTable = {
                 
                 outputchatframeidentify = {
                 
-                    name        = "Identify Chat Frames",
-                    desc        = "Clicking this will output a message in each of your chat windows, helping you to identify them.",
+                    name        = GBRadio_Localisation.OPTION_NAME_outputchatframeidentify,
+                    desc        = GBRadio_Localisation.OPTION_DESC_outputchatframeidentify,
                     type        = "execute",
                     width       = "full",
                     func        = function(info, val) GBRadio:IdentifyChatFrames(); end,
@@ -117,8 +117,8 @@ GBRadio.OptionsTable = {
                 
                 chatmessagecolour = {
                 
-                    name        = "Colour of message text",
-                    desc        = "Set text colour",
+                    name        = GBRadio_Localisation.OPTION_NAME_chatmessagecolour,
+                    desc        = GBRadio_Localisation.OPTION_DESC_chatmessagecolour,
                     type        = "color",
                     set         = function(info, ...) tmp = {...}; GBRadio.db.char["MessageColour"] = tmp; end,
                     get         = function(info) return GBRadio.db.char["MessageColour"][1], GBRadio.db.char["MessageColour"][2], GBRadio.db.char["MessageColour"][3], GBRadio.db.char["MessageColour"][4];  end,
@@ -130,8 +130,8 @@ GBRadio.OptionsTable = {
             
                 squelchtimer = {
                 
-                    name        = "Squelch",
-                    desc        = "Supresses message received emotes and sounds for the specified time, starting when a message received emote is fired. This setting helps prevent message received emote spam on busy comm frequencies.",
+                    name        = GBRadio_Localisation.OPTION_NAME_squelchtimer,
+                    desc        = GBRadio_Localisation.OPTION_DESC_squelchtimer,
                     type        = "range",
                     set         = function(info, val) GBRadio.db.char["SquelchTimer"] = val; end,
                     get         = function(info) return GBRadio.db.char["SquelchTimer"] end,
@@ -148,8 +148,8 @@ GBRadio.OptionsTable = {
             
                 speech = {
                 
-                    name        = "Speech",
-                    desc        = "Automatically /say messages when you send them.",
+                    name        = GBRadio_Localisation.OPTION_NAME_speech,
+                    desc        = GBRadio_Localisation.OPTION_DESC_speech,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["Speech"] = val; end,
                     get         = function(info) return GBRadio.db.char["Speech"] end,
@@ -161,8 +161,8 @@ GBRadio.OptionsTable = {
                 
                 emotes = {
                 
-                    name        = "Receive Emotes",
-                    desc        = "Display emotes when you receive a communication.\n\nNOTE: Disabling this feature will disable communication sounds, and cause sound settings to be ignored.",
+                    name        = GBRadio_Localisation.OPTION_NAME_emotes,
+                    desc        = GBRadio_Localisation.OPTION_DESC_emotes,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["Emotes"] = val; end,
                     get         = function(info) return GBRadio.db.char["Emotes"] end,
@@ -174,8 +174,8 @@ GBRadio.OptionsTable = {
                 
                 sendemotes = {
                 
-                    name        = "Send Emotes",
-                    desc        = "Display emotes when you send a communication.",
+                    name        = GBRadio_Localisation.OPTION_NAME_sendemotes,
+                    desc        = GBRadio_Localisation.OPTION_DESC_sendemotes,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["SendEmotes"] = val; end,
                     get         = function(info) return GBRadio.db.char["SendEmotes"] end,
@@ -187,8 +187,8 @@ GBRadio.OptionsTable = {
                 
                 redactedemotes = {
                 
-                    name        = "Redacted Emotes",
-                    desc        = "Remove messages sent by other players from your emotes.",
+                    name        = GBRadio_Localisation.OPTION_NAME_redactedemotes,
+                    desc        = GBRadio_Localisation.OPTION_DESC_redactedemotes,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["RedactedEmotes"] = val; end,
                     get         = function(info) return GBRadio.db.char["RedactedEmotes"] end,
@@ -201,8 +201,8 @@ GBRadio.OptionsTable = {
                 
                 panicemotes = {
                 
-                    name        = "Panic Emote",
-                    desc        = "Display an emote when you use your panic button.",
+                    name        = GBRadio_Localisation.OPTION_NAME_panicemotes,
+                    desc        = GBRadio_Localisation.OPTION_DESC_panicemotes,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["PanicEmotes"] = val; end,
                     get         = function(info) return GBRadio.db.char["PanicEmotes"] end,
@@ -214,8 +214,8 @@ GBRadio.OptionsTable = {
                 
                 metagaming = {
                 
-                    name        = "Meta Gaming Mode",
-                    desc        = "Display player names in communications.",
+                    name        = GBRadio_Localisation.OPTION_NAME_metagaming,
+                    desc        = GBRadio_Localisation.OPTION_DESC_metagaming,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["MetaGamingState"] = val; end,
                     get         = function(info) return GBRadio.db.char["MetaGamingState"] end,
@@ -227,8 +227,8 @@ GBRadio.OptionsTable = {
                 
                 showtrp3names = {
                 
-                    name        = "Show TRP3 Names",
-                    desc        = "Show TotalRP3 names in communications alongside real character names.\n\nNote: You don't need TRP3 installed to see names.",
+                    name        = GBRadio_Localisation.OPTION_NAME_showtrp3names,
+                    desc        = GBRadio_Localisation.OPTION_DESC_showtrp3names,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["ShowTRP3Names"] = val; end,
                     get         = function(info) return GBRadio.db.char["ShowTRP3Names"] end,
@@ -240,8 +240,8 @@ GBRadio.OptionsTable = {
                 
                 deviceemotenoises = {
                 
-                    name        = "Device Emote Noises",
-                    desc        = "These words will be used in automatic emotes to describe the sound your radio makes. Seperate words on a new line. Requires at least 4 entries.",
+                    name        = GBRadio_Localisation.OPTION_NAME_deviceemotenoises,
+                    desc        = GBRadio_Localisation.OPTION_DESC_deviceemotenoises,
                     type        = "input",
                     multiline   = 5,
                     set         = function(info, val) GBRadio.db.char["DeviceEmoteNoises"] = GBRadio:SetDeviceEmoteNoises(val); end,
@@ -254,8 +254,8 @@ GBRadio.OptionsTable = {
                 
                 emotereceive = {
                 
-                    name        = "Message Received Emote",
-                    desc        = "This emote will fire when you receive a communication message, and have redacted emotes switched off.",
+                    name        = GBRadio_Localisation.OPTION_NAME_emotereceive,
+                    desc        = GBRadio_Localisation.OPTION_DESC_emotereceive,
                     type        = "input",
                     set         = function(info, val) GBRadio.db.char["EmoteReceive"] = val; end,
                     get         = function(info) return GBRadio.db.char["EmoteReceive"] end,
@@ -267,8 +267,8 @@ GBRadio.OptionsTable = {
                 
                 emotereceivehidden = {
                 
-                    name        = "Message Received Redacted Emote",
-                    desc        = "This emote will fire when you receive a communication message, and have redacted emotes switched on.",
+                    name        = GBRadio_Localisation.OPTION_NAME_emotereceivehidden,
+                    desc        = GBRadio_Localisation.OPTION_DESC_emotereceivehidden,
                     type        = "input",
                     set         = function(info, val) GBRadio.db.char["EmoteReceiveHidden"] = val; end,
                     get         = function(info) return GBRadio.db.char["EmoteReceiveHidden"] end,
@@ -280,8 +280,8 @@ GBRadio.OptionsTable = {
                 
                 emotesend = {
                 
-                    name        = "Message Send Speech Emote",
-                    desc        = "This emote will fire when you send a communication message, and have Speech switched on.",
+                    name        = GBRadio_Localisation.OPTION_NAME_emotesend,
+                    desc        = GBRadio_Localisation.OPTION_DESC_emotesend,
                     type        = "input",
                     set         = function(info, val) GBRadio.db.char["EmoteSend"] = val; end,
                     get         = function(info) return GBRadio.db.char["EmoteSend"] end,
@@ -293,8 +293,8 @@ GBRadio.OptionsTable = {
                 
                 emotesendhidden = {
                 
-                    name        = "Message Send No Speech Emote",
-                    desc        = "This emote will fire when you send a communication message, and have Speech switched off.",
+                    name        = GBRadio_Localisation.OPTION_NAME_emotesendhidden,
+                    desc        = GBRadio_Localisation.OPTION_DESC_emotesendhidden,
                     type        = "input",
                     set         = function(info, val) GBRadio.db.char["EmoteSendHidden"] = val; end,
                     get         = function(info) return GBRadio.db.char["EmoteSendHidden"] end,
@@ -306,8 +306,8 @@ GBRadio.OptionsTable = {
                 
                 panicbuttonemote = {
                 
-                    name        = "Panic Button Emote",
-                    desc        = "This emote will fire when you type /gbr panic or /pb.",
+                    name        = GBRadio_Localisation.OPTION_NAME_panicbuttonemote,
+                    desc        = GBRadio_Localisation.OPTION_DESC_panicbuttonemote,
                     type        = "input",
                     set         = function(info, val) GBRadio.db.char["PanicButtonEmote"] = val; end,
                     get         = function(info) return GBRadio.db.char["PanicButtonEmote"] end,
@@ -319,8 +319,8 @@ GBRadio.OptionsTable = {
                 
                 panicbuttonmessage = {
                 
-                    name        = "Panic Button Message",
-                    desc        = "This message will be sent to your default frequency when you type /panic.",
+                    name        = GBRadio_Localisation.OPTION_NAME_panicbuttonmessage,
+                    desc        = GBRadio_Localisation.OPTION_DESC_panicbuttonmessage,
                     type        = "input",
                     set         = function(info, val) GBRadio.db.char["PanicButtonMessage"] = val; end,
                     get         = function(info) return GBRadio.db.char["PanicButtonMessage"] end,
@@ -337,15 +337,15 @@ GBRadio.OptionsTable = {
         transmitterconfig = {
         
             type        = "group",
-            name        = "Transmitters",
+            name        = GBRadio_Localisation.OPTION_NAME_transmitterconfig,
             cmdHidden   = true,
             order       = 2,
             args        = {
         
                 transmitterlocations = {
                 
-                    name        = "Transmitters",
-                    desc        = "Location (in coordinates and instanceId) of transmitters that your device can utilise.\n\nNOTE: They must be in the following format: x,y,instanceId\nThere are no spaces. You can put multiple InstanceIds by separating them with - . Please seperate entries on a new line.",
+                    name        = GBRadio_Localisation.OPTION_NAME_transmitterlocations,
+                    desc        = GBRadio_Localisation.OPTION_DESC_transmitterlocations,
                     type        = "input",
                     multiline   = 5,
                     set         = function(info, val) GBRadio.db.char["Transmitters"] = GBRadio:SetTransmitters(val); end,
@@ -358,8 +358,8 @@ GBRadio.OptionsTable = {
                 
                 usetransmitters = {
                 
-                    name        = "Transmitter mode",
-                    desc        = "Enabling this will restrict communications to within ranges of specified transmitters inside specified zones only.",
+                    name        = GBRadio_Localisation.OPTION_NAME_usetransmitters,
+                    desc        = GBRadio_Localisation.OPTION_DESC_usetransmitters,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["UseTransmitters"] = val; end,
                     get         = function(info) return GBRadio.db.char["UseTransmitters"]; end,
@@ -371,8 +371,8 @@ GBRadio.OptionsTable = {
                 
                 transmittermaxrange = {
                 
-                    name        = "Maximum transmitter range threshold",
-                    desc        = "Maximum range you can be away from a transmitter before message sending and receiving is cut off completely.",
+                    name        = GBRadio_Localisation.OPTION_NAME_transmittermaxrange,
+                    desc        = GBRadio_Localisation.OPTION_DESC_transmittermaxrange,
                     type        = "range",
                     set         = function(info, val) GBRadio.db.char["TransmitterMaxRange"] = val; end,
                     get         = function(info) return GBRadio.db.char["TransmitterMaxRange"]; end,
@@ -389,8 +389,8 @@ GBRadio.OptionsTable = {
                 
                 usetransmitterdistortion = {
                 
-                    name        = "Transmitter distortion",
-                    desc        = "Enabling this will cause messages to become distorted if the sender or receiver is past the specified thresholds.",
+                    name        = GBRadio_Localisation.OPTION_NAME_usetransmitterdistortion,
+                    desc        = GBRadio_Localisation.OPTION_DESC_usetransmitterdistortion,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["UseTransmitterDistortion"] = val; end,
                     get         = function(info) return GBRadio.db.char["UseTransmitterDistortion"]; end,
@@ -402,8 +402,8 @@ GBRadio.OptionsTable = {
                 
                 transmitterlowrange = {
                 
-                    name        = "Transmitter low distortion threshold",
-                    desc        = "Distance from transmitters before messages start to get distorted.",
+                    name        = GBRadio_Localisation.OPTION_NAME_transmitterlowrange,
+                    desc        = GBRadio_Localisation.OPTION_DESC_transmitterlowrange,
                     type        = "range",
                     set         = function(info, val) GBRadio.db.char["TransmitterLowRange"] = val; end,
                     get         = function(info) return GBRadio.db.char["TransmitterLowRange"]; end,
@@ -420,8 +420,8 @@ GBRadio.OptionsTable = {
                 
                 transmittermedrange = {
                 
-                    name        = "Transmitter bad distortion threshold",
-                    desc        = "Distance from transmitters before messages start to very distorted.",
+                    name        = GBRadio_Localisation.OPTION_NAME_transmittermedrange,
+                    desc        = GBRadio_Localisation.OPTION_DESC_transmittermedrange,
                     type        = "range",
                     set         = function(info, val) GBRadio.db.char["TransmitterMedRange"] = val; end,
                     get         = function(info) return GBRadio.db.char["TransmitterMedRange"]; end,
@@ -438,8 +438,8 @@ GBRadio.OptionsTable = {
                 
                 transmitterhighrange = {
                 
-                    name        = "Transmitter very bad distortion threshold",
-                    desc        = "Distance from transmitters before messages become very badly distorted.",
+                    name        = GBRadio_Localisation.OPTION_NAME_transmitterhighrange,
+                    desc        = GBRadio_Localisation.OPTION_DESC_transmitterhighrange,
                     type        = "range",
                     set         = function(info, val) GBRadio.db.char["TransmitterHighRange"] = val; end,
                     get         = function(info) return GBRadio.db.char["TransmitterHighRange"]; end,
@@ -461,15 +461,15 @@ GBRadio.OptionsTable = {
         soundconfig = {
         
             type        = "group",
-            name        = "Sounds",
+            name        = GBRadio_Localisation.OPTION_NAME_soundconfig,
             cmdHidden   = true,
             order       = 3,
             args        = {
         
                 playsounds = {
                 
-                    name        = "Play Sound Effects",
-                    desc        = "Play sound effects when you receive communication messages.",
+                    name        = GBRadio_Localisation.OPTION_NAME_playsounds,
+                    desc        = GBRadio_Localisation.OPTION_DESC_playsounds,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["PlaySounds"] = val; end,
                     get         = function(info) return GBRadio.db.char["PlaySounds"] end,
@@ -480,8 +480,8 @@ GBRadio.OptionsTable = {
                 },
                 
                 playareasounds = {
-                    name        = "Play Area Sounds",
-                    desc        = "Play communication sounds in an area around your character that other GHI users will be able to hear.\n\nDisabling this option will play sounds for only you instead.\n\nNote: Requires GHI to be installed. If GHI isn't installed, this setting is ignored and sounds are played for you only.",
+                    name        = GBRadio_Localisation.OPTION_NAME_playareasounds,
+                    desc        = GBRadio_Localisation.OPTION_DESC_playareasounds,
                     type        = "toggle",
                     set         = function(info, val) GBRadio.db.char["PlayAreaSounds"] = val; end,
                     get         = function(info) if GBRadio:GHI_Installed() == true then return GBRadio.db.char["PlayAreaSounds"] else return false end end,
@@ -492,8 +492,8 @@ GBRadio.OptionsTable = {
                 
                 devicesound = {
                 
-                    name        = "Device Sound",
-                    desc        = "Path to the sound file to play when you receive a communication message.",
+                    name        = GBRadio_Localisation.OPTION_NAME_devicesound,
+                    desc        = GBRadio_Localisation.OPTION_DESC_devicesound,
                     type        = "input",
                     set         = function(info, val) GBRadio.db.char["DeviceSound"] = val; end,
                     get         = function(info) return GBRadio.db.char["DeviceSound"] end,
@@ -510,14 +510,14 @@ GBRadio.OptionsTable = {
         exportimport = {
             
             type        = "group",
-            name        = "Export/Import",
+            name        = GBRadio_Localisation.OPTION_NAME_exportimport,
             cmdHidden   = true,
             order       = 4,
             args        = {
         
                 loadpresetmsg = {
                 
-                    name        = "From the list of presets below, choose what most closely resembles your communication device.",
+                    name        = GBRadio_Localisation.OPTION_NAME_loadpresetmsg,
                     type        = "description",
                     fontSize    = "medium",    
                     order       = 1
@@ -526,7 +526,7 @@ GBRadio.OptionsTable = {
                 
                 loadpreset = {
                 
-                    name    = "Load preset",
+                    name    = GBRadio_Localisation.OPTION_NAME_loadpreset,
                     type    = "select",
                     values  = function() return GBRadio:FetchPresetList() end,
                     order   = 2,
@@ -538,7 +538,7 @@ GBRadio.OptionsTable = {
         
                 importboxmsg = {
                 
-                    name        = "Here you can export or import settings for GBRadio. The main purpose of this feature is to allow guild masters the option to provide pre-made templates for guild members to use, so that everyone uses the same type of communication device.",
+                    name        = GBRadio_Localisation.OPTION_NAME_importboxmsg,
                     type        = "description",
                     fontSize    = "medium",    
                     order       = 4
@@ -547,8 +547,8 @@ GBRadio.OptionsTable = {
                 
                 importbox = {
                 
-                    name        = "Import Settings",
-                    desc        = "Paste your GBRadio import data here.",
+                    name        = GBRadio_Localisation.OPTION_NAME_importbox,
+                    desc        = GBRadio_Localisation.OPTION_DESC_importbox,
                     type        = "input",
                     multiline   = 5,
                     set         = function(info, val) local _, tmp = GBRadio:Deserialize(val); GBRadio:SetPreset(tmp); ReloadUI(); end,
@@ -561,8 +561,8 @@ GBRadio.OptionsTable = {
                 
                 exportbox = {
                 
-                    name        = "Export Settings",
-                    desc        = "Paste your GBRadio import data here.",
+                    name        = GBRadio_Localisation.OPTION_NAME_exportbox,
+                    desc        = GBRadio_Localisation.OPTION_DESC_exportbox,
                     type        = "input",
                     multiline   = 5,
                     get         = function(info) return GBRadio:Serialize(GBRadio.db.char); end,
@@ -578,13 +578,13 @@ GBRadio.OptionsTable = {
         thirdpartymodules = {
             
             type        = "group",
-            name        = "3rd Party",
+            name        = GBRadio_Localisation.OPTION_NAME_thirdpartymodules,
             cmdHidden   = true,
             order       = 5,
             args        = {
             
                 ghidetected = {
-                    name        = "GHI Installed",
+                    name        = GBRadio_Localisation.OPTION_NAME_ghidetected,
                   --desc        = see below
                     type        = "toggle",
                     get         = function(info) return GBRadio:GHI_Installed(); end,
@@ -596,14 +596,14 @@ GBRadio.OptionsTable = {
                 
                 ghidetecteddesc = {
                 
-                    name        = "If Gryphonheart Items is installed, sound effects will default to playing in an area around you when receiving communications.\n\nNote: You can still disable area sounds if you have GHI installed.",
+                    name        = GBRadio_Localisation.OPTION_DESC_ghidetected,
                     type        = "description",
                     order       = 2
                     
                 },
                 
                 trp3detected = {
-                    name        = "TRP3 Installed",
+                    name        = GBRadio_Localisation.OPTION_NAME_trp3detected,
                   --desc        = see below
                     type        = "toggle",
                     get         = function(info) return GBRadio:TRP3_Installed(); end,
@@ -615,7 +615,7 @@ GBRadio.OptionsTable = {
                 
                 trp3detecteddesc = {
                 
-                    name        = "If TotalRP3 is installed, players receiving your communication messages will be able to see your characters custom name (and your characters real in-game name) if they have Meta Gaming Mode switched on.",
+                    name        = GBRadio_Localisation.OPTION_DESC_trp3detected,
                     type        = "description",    
                     order       = 4
                     
@@ -627,14 +627,14 @@ GBRadio.OptionsTable = {
         aboutpage = {
             
             type        = "group",
-            name        = "About",
+            name        = GBRadio_Localisation.OPTION_NAME_aboutpage,
             cmdHidden   = true,
             order       = 6,
             args        = {
         
                 Msg = {
                 
-                    name        = "Thank you for using GBRadio!\n\nGBRadio was developed with communication in mind. Many guard-based roleplaying guilds use radios (or walkers!), and the aim of this addon is to make that as easy and seamless as possible.\n\nA special thanks to the following people and guilds for their help in testing this addon, providing feedback, and giving suggestions:\n\nEtterna @ Argent Dawn\nMiléan @ Argent Dawn\nDidonus @ Argent Dawn\nHarrvey @ Argent Dawn\nYarwood @ Argent Dawn\nLawri @ Argent Dawn\n\nEye of Dalaran @ Argent Dawn\nStormwind Investigations @ Argent Dawn\nStormwind City Guard @ Argent Dawn\n\n|cFF82C2FFAuthor:|r Nasias @ Argent Dawn (EU)\n|cFF82C2FFContact:|r n@siasdarkstar.com\n\n|cFF82C2FFHelp, updates & changelog for BETA:|r\nhttp://www.nasiasdarkstar.com/GBRadio",
+                    name        = GBRadio_Localisation.OPTION_DESC_aboutpage,
                     type        = "description",
                     fontSize    = "medium",    
                     order       = 1
@@ -647,14 +647,14 @@ GBRadio.OptionsTable = {
         helppage = {
             
             type        = "group",
-            name        = "Help",
+            name        = GBRadio_Localisation.OPTION_NAME_helppage,
             cmdHidden   = true,
             order       = 7,
             args        = {
         
                 Msg = {
                 
-                    name        = "Quick command cheatsheet:\n\n/bb <your message> -- Sends a message.\n/wbb <your message> -- Sends a discreet message.\n/gbr -- Shows all available slash commands\n/gbr coord -- Shows the coordinates at your position\n/gbr activate -- Toggles your device on or off.\n/pb -- Sends a distress message.",
+                    name        = GBRadio_Localisation.OPTION_DESC_helppage,
                     type        = "description",
                     fontSize    = "medium",    
                     order       = 1
@@ -666,8 +666,8 @@ GBRadio.OptionsTable = {
         
         activate = {
         
-            name        = "Radio state",
-            desc        = "Turn your communication device on or off.",
+            name        = GBRadio_Localisation.OPTION_NAME_activate,
+            desc        = GBRadio_Localisation.OPTION_DESC_activate,
             type        = "toggle",
             set         = function(info, val) GBRadio:ToggleRadioState(info, val); end,
             get         = function(info) return GBRadio.db.char["Active"]; end,
@@ -678,7 +678,7 @@ GBRadio.OptionsTable = {
         
         radiosatedesc = {
         
-            name        = "Switch your communication device on or off. This can also be done via slash command!",
+            name        = GBRadio_Localisation.OPTION_NAME_radiosatedesc,
             type        = "description",
             order       = 9
             
@@ -686,8 +686,8 @@ GBRadio.OptionsTable = {
         
         isolatedmode = {
         
-            name        = "Isolated mode",
-            desc        = "Restrict messages to guild members only.",
+            name        = GBRadio_Localisation.OPTION_NAME_isolatedmode,
+            desc        = GBRadio_Localisation.OPTION_DESC_isolatedmode,
             type        = "toggle",
             set         = function(info, val) GBRadio.db.char["IsolatedMode"] = val; end,
             get         = function(info) return GBRadio.db.char["IsolatedMode"]; end,
@@ -699,15 +699,15 @@ GBRadio.OptionsTable = {
         
         isolatedmodedesc = {
         
-            name        = "Toggles between sending and receiving messages from only guild members on the same radio frequencies, or everyone on the same radio frequencies.",
+            name        = GBRadio_Localisation.OPTION_NAME_isolatedmodedesc,
             type        = "description",
             order       = 11
             
         },
         
         send = {
-            name            = "Send message",
-            desc            = "<message> - Send a message through your comms device. |cFF00C0FFYou can also type the short-hand version:|r /bb <message>",
+            name            = GBRadio_Localisation.OPTION_NAME_send,
+            desc            = GBRadio_Localisation.OPTION_DESC_send,
             type            = "input",
             set             = function(info, val) GBRadio:SendMessage(val); end,
             width           = "full",
@@ -718,8 +718,8 @@ GBRadio.OptionsTable = {
         },
         
         panic = {
-            name            = "Panic button",
-            desc            = "For emergency use. Sends a distress message to your current frequency. |cFF00C0FFYou can also type the short-hand version:|r /pb",
+            name            = GBRadio_Localisation.OPTION_NAME_panic,
+            desc            = GBRadio_Localisation.OPTION_DESC_panic,
             type            = "input",
             set             = function(info, val) GBRadio:SendPanicMessage(); end,
             width           = "full",
@@ -730,8 +730,8 @@ GBRadio.OptionsTable = {
         },
         		
 		coord = {
-            name            = "Coord button",
-            desc            = "Tells you your coordinates to use with the transmitter mode.",
+            name            = GBRadio_Localisation.OPTION_NAME_coord,
+            desc            = GBRadio_Localisation.OPTION_DESC_coord,
             type            = "input",
             set             = function(info, val) GBRadio:GetCoordinates(); end,
             width           = "full",
@@ -742,8 +742,8 @@ GBRadio.OptionsTable = {
         },
 
         distance = {
-            name            = "Distance Check",
-            desc            = "Tells you your current distance from the closest transmitter.",
+            name            = GBRadio_Localisation.OPTION_NAME_distance,
+            desc            = GBRadio_Localisation.OPTION_DESC_distance,
             type            = "input",
             set             = function(info, val) GBRadio:ShowPlayerClosestTransmitter(); end,
             width           = "full",
@@ -754,8 +754,8 @@ GBRadio.OptionsTable = {
         },
 
         dist = {
-            name            = "Distance Check",
-            desc            = "Tells you your current distance from the closest transmitter.",
+            name            = GBRadio_Localisation.OPTION_NAME_distance,
+            desc            = GBRadio_Localisation.OPTION_NAME_distance,
             type            = "input",
             set             = function(info, val) GBRadio:ShowPlayerClosestTransmitter(); end,
             width           = "full",
@@ -766,8 +766,8 @@ GBRadio.OptionsTable = {
         },
         
         freq = {
-            name            = "Set your primary frequency",
-            desc            = "<frequencyID> - Sets your primary frequency to the specified ID. Comms messages get sent to this frequency.",
+            name            = GBRadio_Localisation.OPTION_NAME_freq,
+            desc            = GBRadio_Localisation.OPTION_NAME_freq,
             type            = "input",
             set             = function(info, val) GBRadio.db.char["PrimaryChannelPrefix"] = tonumber(val); end,
             guiHidden       = true,
@@ -777,8 +777,8 @@ GBRadio.OptionsTable = {
         },
         
         showhistory = {
-            name            = "Show history",
-            desc            = "<lines> - Display x lines of communication history starting from the end.",
+            name            = GBRadio_Localisation.OPTION_NAME_showhistory,
+            desc            = GBRadio_Localisation.OPTION_DESC_showhistory,
             type            = "input",
             set             = function(info, val) GBRadio:ShowHistory(val); end,
             width           = "full",
@@ -789,8 +789,8 @@ GBRadio.OptionsTable = {
         },
         
         config = {
-            name            = "Open configuration",
-            desc            = "Open the configuration screen for GBRadio",
+            name            = GBRadio_Localisation.OPTION_NAME_config,
+            desc            = GBRadio_Localisation.OPTION_DESC_config,
             type            = "execute",
             func            = function(info) InterfaceOptionsFrame_OpenToCategory("GBRadio"); InterfaceOptionsFrame_OpenToCategory("GBRadio"); end,
             guiHidden       = true,
@@ -801,8 +801,8 @@ GBRadio.OptionsTable = {
         },
 
         conf = {
-            name            = "Open configuration",
-            desc            = "Open the configuration screen for GBRadio",
+            name            = GBRadio_Localisation.OPTION_NAME_config,
+            desc            = GBRadio_Localisation.OPTION_DESC_config,
             type            = "execute",
             func            = function(info) InterfaceOptionsFrame_OpenToCategory("GBRadio"); InterfaceOptionsFrame_OpenToCategory("GBRadio"); end,
             guiHidden       = true,

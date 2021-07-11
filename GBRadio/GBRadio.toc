@@ -3,7 +3,7 @@
 ## Notes: In-character communications for roleplaying guilds.
 ## SavedVariables: GBRadioDB
 ## DefaultState: enabled
-## Author: Nasias Darkstar
+## Author: Nasias Darkstar, Lurivar
 ## Version: 2.2.5
 embeds.xml
 GBRadio_Pre.lua
