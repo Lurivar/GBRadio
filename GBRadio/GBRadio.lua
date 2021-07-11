@@ -408,7 +408,8 @@ end;
 
 function GBRadio:GetTextGender()
 
-    return self.Gender[self.PlayerGender];
+    return GBRadio_Localisation.POSSESSIVE_GENDER[self.PlayerGender];
+    -- return self.Gender[self.PlayerGender];
 
 end;
 
@@ -476,7 +477,7 @@ function GBRadio:PlayRadioCrackle()
         
         self:SendCommMessage(GBRadio.GHI_Prefix, GBRadio.GHI_MsgPrefix .. SerialisedCommMsg, "CHANNEL", tostring(AddonChannel))
     else
-        PlaySoundFile(self.db.char["DeviceSound"], "SFX");
+        PlaySound(self.db.char["DeviceSound"], "SFX");
     end
         
 

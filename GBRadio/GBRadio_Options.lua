@@ -654,7 +654,7 @@ GBRadio.OptionsTable = {
         
                 Msg = {
                 
-                    name        = "Quick command cheatsheet:\n\n/bb <your message> -- Sends a message.\n/wbb <your message> -- Sends a discreet message.\n/gbr -- Shows all available slash commands\n/gbr activate -- Toggles your device on or off.\n/pb -- Sends a distress message.",
+                    name        = "Quick command cheatsheet:\n\n/bb <your message> -- Sends a message.\n/wbb <your message> -- Sends a discreet message.\n/gbr -- Shows all available slash commands\n/gbr coord -- Shows the coordinates at your position\n/gbr activate -- Toggles your device on or off.\n/pb -- Sends a distress message.",
                     type        = "description",
                     fontSize    = "medium",    
                     order       = 1
@@ -832,7 +832,6 @@ GBRadio.GHI_AddonChannelPub     = "xtensionxtooltip2";
 
 -- Keeps track of message logs
 GBRadio.MessageLog              = { };
-GBRadio.Gender                  = { "their", "his", "her" };
 
 -- This players name and gender
 GBRadio.PlayerName              = UnitName("player");
