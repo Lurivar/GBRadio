@@ -9,7 +9,7 @@ GBRadio_Colour.Notice      = ""--"|cFF00C0FF";
 GBRadio_Colour.PlayerName  = ""--"|cFF00FF00";
 GBRadio_Colour.GBRadioName = ""--"|cFF00C0FF";
 
-GBRadio_Localisation.LOCALE                          = "en_US";
+GBRadio_Localisation.LOCALE                          = "fr_FR";
 
 GBRadio_Localisation.CMD                             = "/gbr activate";
 
@@ -23,36 +23,36 @@ GBRadio_Localisation.PREFIX_ERROR                    = "|r[" .. GBRadio_Colour.E
 GBRadio_Localisation.SPLIT_DELIMITER                 = " -- ";
 GBRadio_Localisation.SEPERATOR                       = "--------------------------------------------------------------------------";
 
-GBRadio_Localisation.NOTICE_RADIO_ON                 = GBRadio_Localisation.PREFIX_MESSAGE .. " Your %s crackles briefly as it's activated.";
-GBRadio_Localisation.NOTICE_RADIO_OFF                = GBRadio_Localisation.PREFIX_MESSAGE .. " Your %s falls silent as it's deactivated.";
-GBRadio_Localisation.NOTICE_OUT_OF_RANGE             = GBRadio_Localisation.PREFIX_MESSAGE .. " Your %s is dead quiet... It appears you're too far away from the closest transmitter!"
+GBRadio_Localisation.NOTICE_RADIO_ON                 = GBRadio_Localisation.PREFIX_MESSAGE .. " Votre %s grésille brièvement en s'activant.";
+GBRadio_Localisation.NOTICE_RADIO_OFF                = GBRadio_Localisation.PREFIX_MESSAGE .. " Votre %s se fait silencieux alors que vous le désactivez.";
+GBRadio_Localisation.NOTICE_OUT_OF_RANGE             = GBRadio_Localisation.PREFIX_MESSAGE .. " Votre %s est mortellement silencieux... Il semblerait que vous soyez trop loin du transmetteur le plus proche!"
 
-GBRadio_Localisation.NOTICE_TRANSMITTER_ON           = GBRadio_Localisation.PREFIX_MESSAGE .. " Your %s is now in transmitter mode.";
-GBRadio_Localisation.NOTICE_TRANSMITTER_OFF          = GBRadio_Localisation.PREFIX_MESSAGE .. " Your %s is now out of transmitter mode.";
+GBRadio_Localisation.NOTICE_TRANSMITTER_ON           = GBRadio_Localisation.PREFIX_MESSAGE .. " Votre %s utilise désormais le mode transmetteur.";
+GBRadio_Localisation.NOTICE_TRANSMITTER_OFF          = GBRadio_Localisation.PREFIX_MESSAGE .. " Votre %s n'utilise plus le mode transmetteur.";
 
-GBRadio_Localisation.NOTICE_CLOSEST_TRANSMITTER      = GBRadio_Localisation.PREFIX_MESSAGE .. " The closest transmitter is about %s away, at the coordinates %s.";
+GBRadio_Localisation.NOTICE_CLOSEST_TRANSMITTER      = GBRadio_Localisation.PREFIX_MESSAGE .. " Le transmetteur le plus proche est à environ %s, aux coordonnées %s.";
 
-GBRadio_Localisation.NOTICE_RADIO_IS_OFF             = GBRadio_Localisation.PREFIX_MESSAGE .. " You notice that your %s isn't activated on. Activate it on with " .. GBRadio_Localisation.CMD;
+GBRadio_Localisation.NOTICE_RADIO_IS_OFF             = GBRadio_Localisation.PREFIX_MESSAGE .. " Vous remarquez que votre %s n'est pas allumé. Activez le avec " .. GBRadio_Localisation.CMD;
 
 GBRadio_Localisation.MSG_RECEIVE_META_GAMING_ON      = GBRadio_Localisation.PREFIX_FREQUENCY .. GBRadio_Localisation.PREFIX_PLAYER_NAME .. ": %s";
 GBRadio_Localisation.MSG_RECEIVE_META_GAMING_OFF     = GBRadio_Localisation.PREFIX_FREQUENCY .. ": %s";
 
-GBRadio_Localisation.EMOTE_RECEIVE_MESSAGE_HIDDEN    = "'s %s %s as a messsage is received.";       -- format: Player name, random string(Crackles|Hisses|Whirrs|Buzzes|etc.)
-GBRadio_Localisation.EMOTE_RECEIVE_MESSAGE_VISIBLE   = "'s %s %s with a message: ";                 -- format: Player name, random string(Crackles|Hisses|Whirrs|Buzzes|etc.), message
+GBRadio_Localisation.EMOTE_RECEIVE_MESSAGE_HIDDEN    = " attrape son %s qui %s alors qu'il reçoit un message.";    -- format: device name, random string(Crackles|Hisses|Whirrs|Buzzes|etc.)
+GBRadio_Localisation.EMOTE_RECEIVE_MESSAGE_VISIBLE   = " attrape son %s qui %s alors qu'il reçoit ce message: ";   -- format: device name, random string(Crackles|Hisses|Whirrs|Buzzes|etc.), message
 
-GBRadio_Localisation.EMOTE_SEND_MESSAGE_HIDDEN       = "murmurs something into %s %s.";                               -- format: Gender
-GBRadio_Localisation.EMOTE_SEND_MESSAGE_VISIBLE      = "speaks into %s %s" .. GBRadio_Localisation.SPLIT_DELIMITER;         -- format: Gender
+GBRadio_Localisation.EMOTE_SEND_MESSAGE_HIDDEN       = "murmure quelque chose dans %s %s.";                         -- format: Gender, device name
+GBRadio_Localisation.EMOTE_SEND_MESSAGE_VISIBLE      = "parle dans %s %s" .. GBRadio_Localisation.SPLIT_DELIMITER;  -- format: Gender, device name
 
-GBRadio_Localisation.HISTORY_TITLE                   = GBRadio_Colour.Notice .. "# Displaying communications history for %s";
-GBRadio_Localisation.HISTORY_SUMMARY                 = GBRadio_Colour.Notice .. "# Finished outputting %s out of %s possible lines of history";
+GBRadio_Localisation.HISTORY_TITLE                   = GBRadio_Colour.Notice .. "# Affichage de l'historique de communication pour %s";
+GBRadio_Localisation.HISTORY_SUMMARY                 = GBRadio_Colour.Notice .. "# %s de %s lignes possibles écrites";
 
-GBRadio_Localisation.ERROR_MSG_RECEIVE               = GBRadio_Localisation.PREFIX_MESSAGE .. GBRadio_Localisation.PREFIX_ERROR .. " Your %s fizzled whilst decoding a message!";
+GBRadio_Localisation.ERROR_MSG_RECEIVE               = GBRadio_Localisation.PREFIX_MESSAGE .. GBRadio_Localisation.PREFIX_ERROR .. " Votre %s bourdonne en décodant un message!";
 
-GBRadio_Localisation.IDENTIFY_CHAT_FRAME             = GBRadio_Localisation.PREFIX_MESSAGE .. GBRadio_Colour.Notice .. " IDENTIFICATION - This is chat frame %s";
+GBRadio_Localisation.IDENTIFY_CHAT_FRAME             = GBRadio_Localisation.PREFIX_MESSAGE .. GBRadio_Colour.Notice .. " IDENTIFICATION - Ceci est la fenêtre de chat %s";
 
-GBRadio_Localisation.SET_FREQUENCY					 = GBRadio_Localisation.PREFIX_MESSAGE .. " You change the frequency of your %s and put it on %s.";
+GBRadio_Localisation.SET_FREQUENCY					 = GBRadio_Localisation.PREFIX_MESSAGE .. " Vous changez la fréquence de votre %s sur : %s.";
 
-GBRadio_Localisation.STATIC                          = " *Static* ";
-GBRadio_Localisation.STATIC_SOUND                    = " *kchrr* ";
+GBRadio_Localisation.STATIC                          = " *Grésillements* ";
+GBRadio_Localisation.STATIC_SOUND                    = " *brzz* ";
 
-GBRadio_Localisation.POSSESSIVE_GENDER               = { "their", "his", "her" };
+GBRadio_Localisation.POSSESSIVE_GENDER               = { "son", "son", "son" };
