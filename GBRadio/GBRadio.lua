@@ -232,6 +232,7 @@ function GBRadio:GetClosestTransmitter(Location)
     local DistanceMeasurement;
     local DistanceMeasurementKey;
 
+
     if Transmitters == false then
         return false;
     end
@@ -248,17 +249,18 @@ function GBRadio:GetClosestTransmitter(Location)
                 DistanceMeasurement     = DistanceYrds;
                 DistanceMeasurementKey  = "DistanceYrds";
     
+                -- print(string.format("Closest transmitter = %s", ClosestTransmitter));
                 -- If this transmitter is closer than the previous transmitter, and a previous transmitter has already been selected -- Or if no transmitter in this zone has been selected
                 if ( DistanceMeasurement < ClosestTransmitter[DistanceMeasurementKey] and ClosestTransmitter[DistanceMeasurementKey] ~= -1 ) or ( ClosestTransmitter[DistanceMeasurementKey] == -1 ) then
                     ClosestTransmitter = { 
-                        ["Distance"]        = DistanceYrds, 
+                        ["Distance"]        = DistanceYrds,
                         ["DistanceYrds"]    = DistanceYrds,
-                        ["x"]               = v["x"], 
-                        ["y"]               = v["y"], 
-                        ["PlayerLocation"]  = Location 
+                        ["x"]               = v["x"],
+                        ["y"]               = v["y"],
+                        ["PlayerLocation"]  = Location
                     };
                 end
-            end    
+            end
         end
     end
     
@@ -661,6 +663,14 @@ function GBRadio:GetPlayerCoordinates()
     local PosX, PosY, instanceId = GBRMapFiles:GetPlayerWorldPosition();
     local Area          = GetZoneText();
     local Map           = 0;
+
+    if PosX == nil then
+        PosX = 0;
+    end
+
+    if PosY == nil then
+        PosY = 0;
+    end
 
     return { ["x"] = PosX, ["y"] = PosY, ["instanceId"] = instanceId, ["Area"] = Area, ["Map"] = Map };
 
